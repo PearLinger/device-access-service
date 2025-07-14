@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: mqtt-access-server
+
+  profiles:
+    active: dev
+
+  config:
+    import:
+      - optional:classpath:application-${spring.profiles.active}.yaml # 加载【本地】配置
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yaml # 加载【Nacos】的配置
+  kafka:
+    bootstrap-servers: 192.168.3.27:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+    consumer:
+      group-id: my-group
+      auto-offset-reset: latest
+      enable-auto-commit: true
+      auto-commit-interval: 100ms
+    listener:
+      concurrency: 3  # 消费者线程数
+elegoo:
+  broker:
+    client-id: admin
+    url: 192.168.3.25:1883
+    username: admin
+    share: $share/
+    password: admin
+    client-num: 1

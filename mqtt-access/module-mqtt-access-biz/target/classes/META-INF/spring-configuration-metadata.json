@@ -1,0 +1,87 @@
+{
+  "groups": [
+    {
+      "name": "elegoo",
+      "type": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig"
+    },
+    {
+      "name": "elegoo.broker",
+      "type": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig"
+    },
+    {
+      "name": "elegoo.log",
+      "type": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Log",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig"
+    },
+    {
+      "name": "elegoo.low-power",
+      "type": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$LowPower",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "elegoo.broker.client-id",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.broker.client-num",
+      "type": "java.lang.Integer",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.broker.password",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.broker.share",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.broker.url",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.broker.username",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Broker"
+    },
+    {
+      "name": "elegoo.log.open-time",
+      "type": "java.lang.Long",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Log"
+    },
+    {
+      "name": "elegoo.log.upload-url",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$Log"
+    },
+    {
+      "name": "elegoo.low-power.idle",
+      "type": "java.lang.Integer",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$LowPower"
+    },
+    {
+      "name": "elegoo.low-power.interval",
+      "type": "java.lang.Integer",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$LowPower"
+    },
+    {
+      "name": "elegoo.low-power.tcp-url",
+      "type": "java.lang.String",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig$LowPower"
+    },
+    {
+      "name": "elegoo.update-group-shadow",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.elegoo.cloud.module.mqtt.access.config.ElegooMqttConfig"
+    }
+  ],
+  "hints": []
+}

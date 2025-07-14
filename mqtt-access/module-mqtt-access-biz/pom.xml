@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.elegoo.cloud</groupId>
+    <artifactId>module-mqtt-access</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>module-mqtt-access-biz</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+  <description>
+    mqtt接入模块服务实现
+  </description>
+
+  <dependencies>
+    <!-- Spring Cloud 基础 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-env</artifactId>
+    </dependency>
+
+    <!-- Web 相关 -->
+<!--    <dependency>-->
+<!--      <groupId>com.elegoo.cloud</groupId>-->
+<!--      <artifactId>elegoo-spring-boot-starter-security</artifactId>-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <!-- DB 相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-mybatis</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-redis</artifactId>
+    </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.elegoo.cloud</groupId>-->
+<!--      <artifactId>elegoo-spring-boot-starter-oci</artifactId>-->
+<!--    </dependency>-->
+
+    <!-- RPC 远程调用相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-rpc</artifactId>
+    </dependency>
+
+    <!-- Registry 注册中心相关 -->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency>
+
+    <!-- Config 配置中心相关 -->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+    </dependency>
+
+    <!-- 工具类相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-excel</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+
+    <!-- 监控相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-monitor</artifactId>
+    </dependency>
+
+    <!-- 三方云服务相关 -->
+    <dependency>
+      <groupId>org.dromara.hutool</groupId>
+      <artifactId>hutool-extra</artifactId> <!-- 邮件 -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+      <version>${org.eclipse.paho.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- 设置构建的 jar 包名 -->
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <!-- 打包 -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
