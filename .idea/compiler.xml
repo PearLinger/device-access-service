@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Annotation profile for module-device-access" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -12,13 +13,24 @@
           <entry name="$USER_HOME$/soft/maven/repository/org/mapstruct/mapstruct-processor/1.6.2/mapstruct-processor-1.6.2.jar" />
           <entry name="$USER_HOME$/soft/maven/repository/org/mapstruct/mapstruct/1.6.2/mapstruct-1.6.2.jar" />
         </processorPath>
+        <module name="device-access-biz" />
+        <module name="device-manage-biz" />
+        <module name="device-access-api" />
         <module name="module-mqtt-access-api" />
         <module name="module-mqtt-access-biz" />
+      </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="device-access-api" options="-parameters" />
+      <module name="device-access-biz" options="-parameters" />
+      <module name="device-manage-biz" options="-parameters" />
       <module name="module-mqtt-access-api" options="-parameters" />
       <module name="module-mqtt-access-biz" options="-parameters" />
     </option>

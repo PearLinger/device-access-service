@@ -12,6 +12,9 @@
     <module>mqtt-access</module>
     <module>mqtt-access/module-mqtt-access-api</module>
     <module>mqtt-access/module-mqtt-access-biz</module>
+    <module>device-access-api</module>
+    <module>device-access-biz</module>
+    <module>device-manage-biz</module>
   </modules>
 
   <properties>

@@ -1,10 +1,8 @@
 spring:
   application:
-    name: device-access-server
-
+    name: mqtt-access-server
   profiles:
     active: dev
-
   config:
     import:
       - optional:classpath:application-${spring.profiles.active}.yaml # 加载【本地】配置
