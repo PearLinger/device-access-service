@@ -54,7 +54,10 @@ public class EnhanceFreemarkerTemplateFacadeEngine extends FreemarkerTemplateEng
                 otherPath = otherPath + "query";
             } else if(key.equals("FacadeFallback.java")){
                 otherPath = otherPath + "hystrix";
+            } else if(key.equals("Convert.java")){
+                otherPath = otherPath + "convert";
             }
+
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             if (key.equals("DTO.java") || key.equals("VO.java") || key.equals("Query.java")) {
                 this.outputFile(new File(fileName), objectMap, value,true);

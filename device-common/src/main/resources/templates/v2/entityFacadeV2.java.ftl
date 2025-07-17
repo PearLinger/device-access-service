@@ -1,18 +1,17 @@
 package ${facadePackage};
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import ${dtoPackage}.${entity}DTO;
 import ${voPackage}.${entity}VO;
+<#--import ${facadeFallbackPackage}.${entity}FacadeFallback;-->
 import ${queryPackage}.${entity}Query;
-import com.rinoiot.base.model.QueryPageDTO;
-import ${facadeFallbackPackage}.${entity}FacadeFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
-import com.rinoiot.base.constant.ServiceNameConstants;
+import com.elegoo.framework.common.pojo.PageResult;
 <#list table.fields as field>
     <#if field.keyFlag>
         <#assign keyPropertyName="${field.propertyName}"/>
@@ -31,11 +30,12 @@ import com.rinoiot.base.constant.ServiceNameConstants;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 @Service
-@FeignClient(contextId = "${entity}Facade", value = ${ServiceNameConstants}, fallback = ${entity}FacadeFallback.class)
+<#--<todo #--@FeignClient(contextId = "${entity}Facade", value = ${ServiceNameConstants}, fallback = ${entity}FacadeFallback.class)&ndash;&gt;-->
+@FeignClient(contextId = "${entity}Facade")
 public interface ${entity}Facade {
 
     @PostMapping(value = "/inside/v1/${entity?replace("([a-z])([A-Z]+)","$1/$2","r")?lower_case}/queryPage")
-    Page<${entity}VO> queryPage(@RequestBody QueryPageDTO<${entity}Query> pageDTO);
+    PageResult<${entity}VO> queryPage(@RequestBody ${entity}Query pageDTO);
 
     @PostMapping(value = "/inside/v1/${entity?replace("([a-z])([A-Z]+)","$1/$2","r")?lower_case}/queryList")
     List<${entity}VO> queryList(@RequestBody ${entity}Query query);

@@ -12,20 +12,20 @@ import java.util.Map;
 
 public class RinoCodeGeneratorV2 {
     //表名称
-    private static String[] tableNames = new String[]{"t_agora_license_info"};
+    private static String[] tableNames = new String[]{"t_app_version_info"};
     //路由名称
-    private String controllerPathName = "agora-license-info";
+    private String controllerPathName = "agora-version-info";
     //数据库名称
     private String databaseName = "elegoo";
     //模块名称
-    private String moduleName = "provider.device";
+    private String moduleName = "device";
     //是否生成facade接口
     private Boolean isFacade = true;
     private Boolean isCache = false;//是否生成缓存
     //数据库url
     private String url = "jdbc:postgresql://192.168.3.25:15432/elegoo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
-    private String userName = "root";
-    private String password = "E6Bnj_BW0V9EpqfU";
+    private String userName = "user_mmijbx";
+    private String password = "password_ifrepx";
 
     private String author = "yangyi";//作者
     //文件路径
@@ -41,7 +41,7 @@ public class RinoCodeGeneratorV2 {
     private String outPutProviderFacadeDir = System.getProperty("user.dir") + "/device-access-api";
     private String classFacadeDir = outPutProviderFacadeDir + "/src/main/java";//class目录
     //facade模块名
-    private String moduleFacadeName = "provider.facade.device";//模块名
+    private String moduleFacadeName = "device.api";//模块名
     //feign value名称
     private String serviceNameConstants = "ServiceNameConstants.PRODUCT_SERVICE";
     //FacadeFallback errorCode
@@ -57,7 +57,6 @@ public class RinoCodeGeneratorV2 {
         FastAutoGenerator.create(url, userName, password)
                 .globalConfig(builder -> {
                     builder.author(author) // 设置作者
-                            .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件,感觉不好使,应该用其他方式,懒得看了
                             .disableOpenDir()//不打开文件夹
                             .dateType(DateType.ONLY_DATE)//全局日期使用util下Date
@@ -91,6 +90,7 @@ public class RinoCodeGeneratorV2 {
                     customMap.put("facadeServicePackage",basePackage+".feign");
                     customMap.put("dtoPackageFacade",basePackageFacade+".dto");
                     customMap.put("voPackageFacade",basePackageFacade+".vo");
+                    customMap.put("convertPackage",basePackage+".convert");
                     customMap.put("queryPackageFacade",basePackageFacade+".query");
                     customMap.put("mapperPackage",basePackage + ".dao");
 
@@ -103,6 +103,7 @@ public class RinoCodeGeneratorV2 {
                     //customFile.put("VO.java", "/templates/entityVO.java.ftl");
                     //customFile.put("Query.java", "/templates/entityQuery.java.ftl");
                     customFile.put("Mapper.java", "/templates/v2/mapperV2.java.ftl");
+                    customFile.put("Convert.java", "/templates/v2/convertV2.java.ftl");
                     if(isFacade){
                         customFile.put("FacadeService.java","/templates/v2/entityFacadeServiceV2.java.ftl");
                     }
@@ -137,7 +138,6 @@ public class RinoCodeGeneratorV2 {
         FastAutoGenerator.create(url, userName, password)
                 .globalConfig(builder -> {
                     builder.author(author) // 设置作者
-                            .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件,感觉不好使,应该用其他方式,懒得看了
                             .disableOpenDir()//不打开文件夹
                             .dateType(DateType.ONLY_DATE)//全局日期使用util下Date

@@ -45,12 +45,14 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
 	@Override
-    public Page<${entity}VO> queryPage(QueryPageDTO<${entity}Query> pageDTO) {
-        Page<${entity}> page = PageUtil.query(pageDTO);
+    public PageResult<${entity}VO> queryPage(${entity}Query pageDTO) {
+        Page<${entity}> page = new Page<${entity}>(pageDTO.getPageNo(),pageDTO.getPageSize());
         LambdaQueryWrapper<${entity}> lqw = getWrapper(pageDTO.getQueryCondition());
 
-        page = this.page(page,lqw);
-        return PageUtil.build(page, ${entity}VO.class,(source,target) -> setOther(target));
+        PageResult<${entity}VO> pageResult = new PageResult<>();
+        pageResult.setList(toRespVOS(page.getList(), false));
+        pageResult.setTotal(page.getTotal());
+        return pageResult;
     }
 
     @Override

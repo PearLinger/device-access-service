@@ -25,6 +25,8 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
                 otherPath = otherPath + "feign";
             } else if (key.equals("Mapper.java")) {
                 otherPath = otherPath + "dao";
+            } else if(key.equals("Convert.java")){
+                otherPath = otherPath + "convert";
             }
             String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             this.outputFile(new File(fileName), objectMap, value,true);
