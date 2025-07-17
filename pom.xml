@@ -15,6 +15,7 @@
     <module>device-access-api</module>
     <module>device-access-biz</module>
     <module>device-manage-biz</module>
+    <module>device-common</module>
   </modules>
 
   <properties>
