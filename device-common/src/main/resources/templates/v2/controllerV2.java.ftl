@@ -3,13 +3,13 @@ package ${package.Controller};
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.elegoo.framework.common.pojo.CommonResult;
 import ${package.Service}.${entity}Service;
-import ${facadePackage}.${entity}Facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.elegoo.framework.common.pojo.PageResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
 <#else>
@@ -53,14 +53,14 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    private final ${entity}Facade ${entity?uncap_first}Facade;
+    private final ${entity}Service ${entity?uncap_first}Service;
 
     /**
      * 查询分页数据
      */
     @PostMapping(value = "/queryPage")
     public CommonResult<PageResult<${entity}VO>> queryPage(@RequestBody ${entity}Query pageDTO) {
-        PageResult<${entity}VO> page = ${entity?uncap_first}Facade.queryPage(pageDTO);
+        PageResult<${entity}VO> page = ${entity?uncap_first}Service.queryPage(pageDTO);
         return CommonResult.success(page);
     }
 
@@ -68,8 +68,8 @@ public class ${table.controllerName} {
      * 根据${entity?uncap_first}Id查询
      */
     @PostMapping(value = "/getBy${keyPropertyName?cap_first}")
-    public CommonResult<${entity}VO> getBy${keyPropertyName?cap_first}(@RequestParam String ${keyPropertyName?uncap_first}) {
-        ${entity}VO result = ${entity?uncap_first}Facade.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
+    public CommonResult<${entity}VO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
+        ${entity}VO result = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
         return CommonResult.success(result);
     }
 
@@ -78,7 +78,7 @@ public class ${table.controllerName} {
      */
     @PostMapping(value = "/add")
     public CommonResult<Boolean> add(@RequestBody ${entity}DTO dto) {
-        return CommonResult.success(${entity?uncap_first}Facade.add(dto));
+        return CommonResult.success(${entity?uncap_first}Service.add(dto));
     }
 
     /**
@@ -86,15 +86,15 @@ public class ${table.controllerName} {
      */
     @PostMapping(value = "/updateBy${keyPropertyName?cap_first}")
     public CommonResult<Boolean> updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}DTO dto) {
-        return CommonResult.success(${entity?uncap_first}Facade.updateBy${keyPropertyName?cap_first}(dto));
+        return CommonResult.success(${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(dto));
     }
 
     /**
      * 删除
      */
-    @PostMapping(value = "/removeBy${keyPropertyName?cap_first}")
-    public CommonResult<Boolean> removeBy${keyPropertyName?cap_first}(@RequestParam String ${keyPropertyName?uncap_first}) {
-        return CommonResult.success(${entity?uncap_first}Facade.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first}));
+    @DeleteMapping(value = "/removeBy${keyPropertyName?cap_first}")
+    public CommonResult<Boolean> removeBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
+        return CommonResult.success(${entity?uncap_first}Service.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first}));
     }
 
 

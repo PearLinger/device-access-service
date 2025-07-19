@@ -83,6 +83,8 @@ public class RinoCodeGeneratorV2 {
                     String basePackage = rootPackage+"."+moduleName;
                     String basePackageFacade = rootPackage + "." + moduleFacadeName;
                     customMap.put("dtoPackage",basePackage+".dto");
+                    customMap.put("dtoApiPackage",basePackage+".api.dto");
+                    customMap.put("voApiPackage",basePackage+".api.vo");
                     customMap.put("pathName",controllerPathName);
                     customMap.put("voPackage",basePackage+".vo");
                     customMap.put("queryPackage",basePackage+".query");
@@ -93,7 +95,7 @@ public class RinoCodeGeneratorV2 {
                     customMap.put("convertPackage",basePackage+".convert");
                     customMap.put("queryPackageFacade",basePackageFacade+".query");
                     customMap.put("mapperPackage",basePackage + ".dao");
-
+                    customMap.put("mapperAnnotation",true);
                     customMap.put("facadePackage",basePackageFacade);
                     consumer.customMap(customMap);
 
@@ -151,6 +153,8 @@ public class RinoCodeGeneratorV2 {
                     Map<String, Object> customMap = new HashMap<>();
                     String basePackage = rootPackage+"."+moduleFacadeName;
                     customMap.put("dtoPackage",basePackage+".dto");
+                    customMap.put("dtoApiPackage", basePackage + ".api.dto");
+                    customMap.put("voApiPackage",basePackage+".api.vo");
                     customMap.put("voPackage",basePackage+".vo");
                     customMap.put("queryPackage",basePackage+".query");
                     customMap.put("module",moduleFacadeName);
@@ -158,6 +162,7 @@ public class RinoCodeGeneratorV2 {
                     customMap.put("facadeFallbackPackage",basePackage+".hystrix");
                     customMap.put("ServiceNameConstants",serviceNameConstants);
                     customMap.put("errorCode",errorCode);
+                    customMap.put("mapperAnnotation",true);
                     consumer.customMap(customMap);
 
                     // 自定义模板

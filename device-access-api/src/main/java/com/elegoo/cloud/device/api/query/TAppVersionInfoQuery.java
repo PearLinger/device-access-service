@@ -2,17 +2,17 @@ package com.elegoo.cloud.device.api.query;
 
 import lombok.Data;
 import java.util.Date;
-
+import com.elegoo.framework.common.pojo.PageParam;
 /**
 * <p>
 * 
 * </p>
 *
 * @author yangyi
-* @since 2025-07-17
+* @since 2025-07-19
 */
 @Data
-public class TAppVersionInfoQuery {
+public class TAppVersionInfoQuery extends PageParam{
 
     /**
     * 主键

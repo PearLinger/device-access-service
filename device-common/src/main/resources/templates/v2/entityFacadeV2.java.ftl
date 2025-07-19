@@ -41,7 +41,7 @@ public interface ${entity}Facade {
     List<${entity}VO> queryList(@RequestBody ${entity}Query query);
 
     @PostMapping(value = "/inside/v1/${entity?replace("([a-z])([A-Z]+)","$1/$2","r")?lower_case}/getBy${keyPropertyName?cap_first}")
-    ${entity}VO getBy${keyPropertyName?cap_first}(@RequestParam("${keyPropertyName?uncap_first}") String ${keyPropertyName?uncap_first});
+    ${entity}VO getBy${keyPropertyName?cap_first}(@RequestParam("${keyPropertyName?uncap_first}") Long ${keyPropertyName?uncap_first});
 
     @PostMapping(value = "/inside/v1/${entity?replace("([a-z])([A-Z]+)","$1/$2","r")?lower_case}/add")
     Boolean add(@RequestBody ${entity}DTO dto);
@@ -50,6 +50,6 @@ public interface ${entity}Facade {
     Boolean updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}DTO dto);
 
     @PostMapping(value = "/inside/v1/${entity?replace("([a-z])([A-Z]+)","$1/$2","r")?lower_case}/removeBy${keyPropertyName?cap_first}")
-    Boolean removeBy${keyPropertyName?cap_first}(@RequestParam("${keyPropertyName?uncap_first}") String ${keyPropertyName?uncap_first});
+    Boolean removeBy${keyPropertyName?cap_first}(@RequestParam("${keyPropertyName?uncap_first}") Long ${keyPropertyName?uncap_first});
 }
 </#if>

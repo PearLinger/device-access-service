@@ -8,9 +8,9 @@ import ${voPackageFacade}.${entity}VO;
 import ${queryPackageFacade}.${entity}Query;
 import ${package.Service}.${entity}Service;
 import ${facadePackage}.${entity}Facade;
-import com.rinoiot.base.model.QueryPageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import com.elegoo.framework.common.pojo.PageResult;
 import java.util.List;
 <#list table.fields as field>
     <#if field.keyFlag>
@@ -36,7 +36,7 @@ public class ${entity}FacadeService implements ${entity}Facade {
     private final ${entity}Service ${entity?uncap_first}Service;
 
     @Override
-    public Page<${entity}VO> queryPage(QueryPageDTO<${entity}Query> pageDTO){
+    public PageResult<${entity}VO> queryPage(${entity}Query pageDTO){
         return ${entity?uncap_first}Service.queryPage(pageDTO);
     }
 
@@ -46,7 +46,7 @@ public class ${entity}FacadeService implements ${entity}Facade {
     }
 
     @Override
-    public ${entity}VO getBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first}){
+    public ${entity}VO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
         return ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
     }
 
@@ -61,7 +61,7 @@ public class ${entity}FacadeService implements ${entity}Facade {
     }
 
     @Override
-    public Boolean removeBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first}){
+    public Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
         return ${entity?uncap_first}Service.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
     }
 }

@@ -1,9 +1,8 @@
 package ${package.ServiceImpl};
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rinoiot.base.exception.BaseException;
-import com.rinoiot.base.model.CommonErrorCodes;
 import ${package.Entity}.${entity};
 import ${mapperPackage}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
@@ -11,15 +10,16 @@ import ${dtoPackageFacade}.${entity}DTO;
 import ${voPackageFacade}.${entity}VO;
 import ${queryPackageFacade}.${entity}Query;
 import ${superServiceImplClassPackage};
-import com.rinoiot.base.model.QueryPageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.rinoiot.mybatisplus.utils.PageUtil;
-import com.rinoiot.core.utils.BeanUtils;
 import cn.hutool.core.util.StrUtil;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import com.elegoo.framework.common.pojo.PageResult;
+import com.elegoo.cloud.device.service.${entity}Convert;
+import com.elegoo.framework.common.exception.ServiceException;
+import com.elegoo.framework.common.exception.enums.GlobalErrorCodeConstants;
 <#list table.fields as field>
 <#if field.keyFlag>
     <#assign keyPropertyName="${field.propertyName}"/>
@@ -43,58 +43,47 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 }
 <#else>
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
-
+  @Autowired
+  private ${entity}Convert convert;
 	@Override
     public PageResult<${entity}VO> queryPage(${entity}Query pageDTO) {
         Page<${entity}> page = new Page<${entity}>(pageDTO.getPageNo(),pageDTO.getPageSize());
-        LambdaQueryWrapper<${entity}> lqw = getWrapper(pageDTO.getQueryCondition());
-
-        PageResult<${entity}VO> pageResult = new PageResult<>();
-        pageResult.setList(toRespVOS(page.getList(), false));
-        pageResult.setTotal(page.getTotal());
-        return pageResult;
+        LambdaQueryWrapper<${entity}> lqw = getWrapper(pageDTO);
+        page = this.page(page,lqw);
+        return convert.pageEntityConvertToVO(page);
     }
 
     @Override
     public List<${entity}VO> queryList(${entity}Query query) {
         LambdaQueryWrapper<${entity}> lqw = getWrapper(query);
         List<${entity}> list = this.list(lqw);
-        return BeanUtils.copyListAndOperator(list,${entity}VO.class,(source, target) -> setOther(target));
+        return convert.entitysConvertToVO(list);
     }
 
-    private void setOther(${entity}VO target) {
-    }
 
     @Override
-    public ${entity}VO getBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first}){
-        if (StrUtil.isEmpty(${keyPropertyName?uncap_first})){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+    public ${entity}VO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
+        if (${keyPropertyName?uncap_first} == null){
+          throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
-        ${entity}VO result = null;
         ${entity} record = super.getById(${keyPropertyName?uncap_first});
-        if(record != null){
-            result = new ${entity}VO();
-            BeanUtils.copyProperties(record,result);
-        }
-        return result;
+        return convert.entityConvertToVO(record);
     }
 
     @Override
     public Boolean add(${entity}DTO dto){
         valParams(dto);
-        ${entity} record = new ${entity}();
-        BeanUtils.copyProperties(dto,record);
+        ${entity} record = convert.dtoConvertToEntity(dto);
         return this.save(record);
     }
 
     @Override
     public Boolean updateBy${keyPropertyName?cap_first}(${entity}DTO dto){
-        if(StrUtil.isBlank(dto.get${keyPropertyName?cap_first}())){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+        if(ObjectUtil.isEmpty(dto.get${keyPropertyName?cap_first}())){
+           throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
         valParams(dto);
-        ${entity} record = new ${entity}();
-        BeanUtils.copyProperties(dto,record);
+        ${entity} record = convert.dtoConvertToEntity(dto);
         return this.updateById(record);
     }
 
@@ -102,9 +91,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public Boolean removeBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first}){
-        if (StrUtil.isEmpty(${keyPropertyName?uncap_first})){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+    public Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
+        if (${keyPropertyName?uncap_first} == null){
+        throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
         return super.removeById(${keyPropertyName?uncap_first});
     }

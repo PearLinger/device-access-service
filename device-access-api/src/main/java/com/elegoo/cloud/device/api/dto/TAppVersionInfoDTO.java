@@ -9,7 +9,7 @@ import java.util.Date;
  * </p>
  *
  * @author yangyi
- * @since 2025-07-17
+ * @since 2025-07-19
  */
 @Data
 public class TAppVersionInfoDTO {

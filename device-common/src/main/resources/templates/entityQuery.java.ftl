@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 import java.util.Date;
-
+import com.elegoo.framework.common.pojo.PageParam;
 /**
 * <p>
 * ${table.comment!}
@@ -29,7 +29,7 @@ import java.util.Date;
 <#if swagger>
 @ApiModel(value = "${entity}Query对象", description = "${table.comment!}")
 </#if>
-public class ${entity}Query {
+public class ${entity}Query extends PageParam{
 <#if entitySerialVersionUID>
 
     private static final long serialVersionUID = 1L;

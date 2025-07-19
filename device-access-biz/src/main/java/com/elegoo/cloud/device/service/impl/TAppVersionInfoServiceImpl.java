@@ -1,9 +1,8 @@
 package com.elegoo.cloud.device.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rinoiot.base.exception.BaseException;
-import com.rinoiot.base.model.CommonErrorCodes;
 import com.elegoo.cloud.device.entity.TAppVersionInfo;
 import com.elegoo.cloud.device.dao.TAppVersionInfoMapper;
 import com.elegoo.cloud.device.service.TAppVersionInfoService;
@@ -11,15 +10,16 @@ import com.elegoo.cloud.device.api.dto.TAppVersionInfoDTO;
 import com.elegoo.cloud.device.api.vo.TAppVersionInfoVO;
 import com.elegoo.cloud.device.api.query.TAppVersionInfoQuery;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.rinoiot.base.model.QueryPageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.rinoiot.mybatisplus.utils.PageUtil;
-import com.rinoiot.core.utils.BeanUtils;
 import cn.hutool.core.util.StrUtil;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import com.elegoo.framework.common.pojo.PageResult;
+import com.elegoo.cloud.device.service.TAppVersionInfoConvert;
+import com.elegoo.framework.common.exception.ServiceException;
+import com.elegoo.framework.common.exception.enums.GlobalErrorCodeConstants;
 
 /**
  * <p>
@@ -27,64 +27,53 @@ import java.util.List;
  * </p>
  *
  * @author yangyi
- * @since 2025-07-17
+ * @since 2025-07-19
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TAppVersionInfoServiceImpl extends ServiceImpl<TAppVersionInfoMapper, TAppVersionInfo> implements TAppVersionInfoService {
-
+  @Autowired
+  private TAppVersionInfoConvert convert;
 	@Override
     public PageResult<TAppVersionInfoVO> queryPage(TAppVersionInfoQuery pageDTO) {
         Page<TAppVersionInfo> page = new Page<TAppVersionInfo>(pageDTO.getPageNo(),pageDTO.getPageSize());
-        LambdaQueryWrapper<TAppVersionInfo> lqw = getWrapper(pageDTO.getQueryCondition());
-
-        PageResult<TAppVersionInfoVO> pageResult = new PageResult<>();
-        pageResult.setList(toRespVOS(page.getList(), false));
-        pageResult.setTotal(page.getTotal());
-        return pageResult;
+        LambdaQueryWrapper<TAppVersionInfo> lqw = getWrapper(pageDTO);
+        page = this.page(page,lqw);
+        return convert.pageEntityConvertToVO(page);
     }
 
     @Override
     public List<TAppVersionInfoVO> queryList(TAppVersionInfoQuery query) {
         LambdaQueryWrapper<TAppVersionInfo> lqw = getWrapper(query);
         List<TAppVersionInfo> list = this.list(lqw);
-        return BeanUtils.copyListAndOperator(list,TAppVersionInfoVO.class,(source, target) -> setOther(target));
+        return convert.entitysConvertToVO(list);
     }
 
-    private void setOther(TAppVersionInfoVO target) {
-    }
 
     @Override
-    public TAppVersionInfoVO getById(String id){
-        if (StrUtil.isEmpty(id)){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+    public TAppVersionInfoVO getById(Long id){
+        if (id == null){
+          throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
-        TAppVersionInfoVO result = null;
         TAppVersionInfo record = super.getById(id);
-        if(record != null){
-            result = new TAppVersionInfoVO();
-            BeanUtils.copyProperties(record,result);
-        }
-        return result;
+        return convert.entityConvertToVO(record);
     }
 
     @Override
     public Boolean add(TAppVersionInfoDTO dto){
         valParams(dto);
-        TAppVersionInfo record = new TAppVersionInfo();
-        BeanUtils.copyProperties(dto,record);
+        TAppVersionInfo record = convert.dtoConvertToEntity(dto);
         return this.save(record);
     }
 
     @Override
     public Boolean updateById(TAppVersionInfoDTO dto){
-        if(StrUtil.isBlank(dto.getId())){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+        if(ObjectUtil.isEmpty(dto.getId())){
+           throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
         valParams(dto);
-        TAppVersionInfo record = new TAppVersionInfo();
-        BeanUtils.copyProperties(dto,record);
+        TAppVersionInfo record = convert.dtoConvertToEntity(dto);
         return this.updateById(record);
     }
 
@@ -92,9 +81,9 @@ public class TAppVersionInfoServiceImpl extends ServiceImpl<TAppVersionInfoMappe
     }
 
     @Override
-    public Boolean removeById(String id){
-        if (StrUtil.isEmpty(id)){
-            throw new BaseException(CommonErrorCodes.MISS_PARAMS);
+    public Boolean removeById(Long id){
+        if (id == null){
+        throw new ServiceException(GlobalErrorCodeConstants.BAD_REQUEST);
         }
         return super.removeById(id);
     }

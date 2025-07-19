@@ -6,8 +6,8 @@ import ${superServiceClassPackage};
 import ${dtoPackageFacade}.${entity}DTO;
 import ${voPackageFacade}.${entity}VO;
 import ${queryPackageFacade}.${entity}Query;
-import com.rinoiot.base.model.QueryPageDTO;
 import java.util.List;
+import com.elegoo.framework.common.pojo.PageResult;
 <#list table.fields as field>
     <#if field.keyFlag>
         <#assign keyPropertyName="${field.propertyName}"/>
@@ -27,16 +27,16 @@ interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-    Page<${entity}VO> queryPage(QueryPageDTO<${entity}Query> pageDTO);
+    PageResult<${entity}VO> queryPage(${entity}Query pageDTO);
 
     List<${entity}VO> queryList(${entity}Query query);
 
-    ${entity}VO getBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first});
+    ${entity}VO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first});
 
     Boolean add(${entity}DTO dto);
 
     Boolean updateBy${keyPropertyName?cap_first}(${entity}DTO dto);
 
-    Boolean removeBy${keyPropertyName?cap_first}(String ${keyPropertyName?uncap_first});
+    Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first});
 }
 </#if>

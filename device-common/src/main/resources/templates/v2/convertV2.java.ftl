@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ${package.Entity}.${entity};
-import ${dtoPackage}.${entity}DTO;
-import ${voPackage}.${entity}VO;
+import ${dtoApiPackage}.${entity}DTO;
+import ${voApiPackage}.${entity}VO;
 import java.util.List;
-
+import com.elegoo.framework.common.pojo.PageResult;
 
 /**
 * <p>
@@ -18,8 +18,14 @@ import java.util.List;
 * @since ${date}
 */
 
-  @Mapper(componentModel = "spring")
-  public interface ${entity}Convert {
-  @Mapping(source = "records", target = "list")
-  PageResult<${entity}VO> pageEntityConvertToVO(Page<${entity}> pageInfo);
+@Mapper(componentModel = "spring")
+public interface ${entity}Convert {
+      @Mapping(source = "records", target = "list")
+      PageResult<${entity}VO> pageEntityConvertToVO(Page<${entity}> pageInfo);
+
+      ${entity} dtoConvertToEntity(${entity}DTO dto);
+
+      ${entity}VO entityConvertToVO(${entity} entity);
+
+      List<${entity}VO> entitysConvertToVO(List<${entity}> entitys);
   }

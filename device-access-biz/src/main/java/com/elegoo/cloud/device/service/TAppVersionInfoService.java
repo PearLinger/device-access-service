@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.elegoo.cloud.device.api.dto.TAppVersionInfoDTO;
 import com.elegoo.cloud.device.api.vo.TAppVersionInfoVO;
 import com.elegoo.cloud.device.api.query.TAppVersionInfoQuery;
-import com.rinoiot.base.model.QueryPageDTO;
 import java.util.List;
+import com.elegoo.framework.common.pojo.PageResult;
 
 /**
  * <p>
@@ -15,19 +15,19 @@ import java.util.List;
  * </p>
  *
  * @author yangyi
- * @since 2025-07-17
+ * @since 2025-07-19
  */
 public interface TAppVersionInfoService extends IService<TAppVersionInfo> {
 
-    Page<TAppVersionInfoVO> queryPage(QueryPageDTO<TAppVersionInfoQuery> pageDTO);
+    PageResult<TAppVersionInfoVO> queryPage(TAppVersionInfoQuery pageDTO);
 
     List<TAppVersionInfoVO> queryList(TAppVersionInfoQuery query);
 
-    TAppVersionInfoVO getById(String id);
+    TAppVersionInfoVO getById(Long id);
 
     Boolean add(TAppVersionInfoDTO dto);
 
     Boolean updateById(TAppVersionInfoDTO dto);
 
-    Boolean removeById(String id);
+    Boolean removeById(Long id);
 }

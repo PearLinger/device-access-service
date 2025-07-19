@@ -34,7 +34,11 @@
       <groupId>com.elegoo.cloud</groupId>
       <artifactId>elegoo-spring-boot-starter-biz-data-permission</artifactId>
     </dependency>
-
+    <!-- Web 相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-security</artifactId>
+    </dependency>
 
     <!-- Web 相关 -->
     <dependency>
@@ -101,6 +105,7 @@
     <dependency>
       <groupId>com.elegoo.cloud</groupId>
       <artifactId>device-access-api</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 

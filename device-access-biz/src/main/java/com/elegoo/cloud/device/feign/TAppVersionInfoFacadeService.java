@@ -8,9 +8,9 @@ import com.elegoo.cloud.device.api.vo.TAppVersionInfoVO;
 import com.elegoo.cloud.device.api.query.TAppVersionInfoQuery;
 import com.elegoo.cloud.device.service.TAppVersionInfoService;
 import com.elegoo.cloud.device.api.TAppVersionInfoFacade;
-import com.rinoiot.base.model.QueryPageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import com.elegoo.framework.common.pojo.PageResult;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ import java.util.List;
  * </p>
  *
  * @author yangyi
- * @since 2025-07-17
+ * @since 2025-07-19
  */
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class TAppVersionInfoFacadeService implements TAppVersionInfoFacade {
     private final TAppVersionInfoService tAppVersionInfoService;
 
     @Override
-    public Page<TAppVersionInfoVO> queryPage(QueryPageDTO<TAppVersionInfoQuery> pageDTO){
+    public PageResult<TAppVersionInfoVO> queryPage(TAppVersionInfoQuery pageDTO){
         return tAppVersionInfoService.queryPage(pageDTO);
     }
 
@@ -38,7 +38,7 @@ public class TAppVersionInfoFacadeService implements TAppVersionInfoFacade {
     }
 
     @Override
-    public TAppVersionInfoVO getById(String id){
+    public TAppVersionInfoVO getById(Long id){
         return tAppVersionInfoService.getById(id);
     }
 
@@ -53,7 +53,7 @@ public class TAppVersionInfoFacadeService implements TAppVersionInfoFacade {
     }
 
     @Override
-    public Boolean removeById(String id){
+    public Boolean removeById(Long id){
         return tAppVersionInfoService.removeById(id);
     }
 }
