@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mqtt-access-server
+    name: device-access-server
 
   profiles:
     active: dev

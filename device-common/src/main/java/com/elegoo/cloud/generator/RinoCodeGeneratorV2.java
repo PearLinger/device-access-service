@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class RinoCodeGeneratorV2 {
     //表名称
-    private static String[] tableNames = new String[]{"t_app_version_info"};
+    private static String[] tableNames = new String[]{"t_tbmq_request_info"};
     //路由名称
-    private String controllerPathName = "agora-version-info";
+    private String controllerPathName = "tbmq-request-info";
     //数据库名称
     private String databaseName = "elegoo";
     //模块名称
@@ -23,7 +23,7 @@ public class RinoCodeGeneratorV2 {
     private Boolean isFacade = true;
     private Boolean isCache = false;//是否生成缓存
     //数据库url
-    private String url = "jdbc:postgresql://192.168.3.25:15432/elegoo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
+    private String url = "jdbc:postgresql://192.168.3.25:15432/elegoo-cloud-device-management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
     private String userName = "user_mmijbx";
     private String password = "password_ifrepx";
 
@@ -171,7 +171,6 @@ public class RinoCodeGeneratorV2 {
                     customFile.put("VO.java", "/templates/entityVO.java.ftl");
                     customFile.put("Query.java", "/templates/entityQuery.java.ftl");
                     customFile.put("Facade.java","/templates/v2/entityFacadeV2.java.ftl");
-                    customFile.put("FacadeFallback.java","/templates/v2/entityFacadeFallbackV2.java.ftl");
                     consumer.customFile(customFile);
                 }).strategyConfig(builder -> {
                     builder.addInclude(tableName) // 设置需要生成的表名

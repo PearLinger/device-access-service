@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 import java.util.Date;
 
@@ -18,49 +17,46 @@ import java.util.Date;
  * @since 2025-07-19
  */
 @Data
-@TableName("t_app_version_info")
-public class TAppVersionInfo extends Model<TAppVersionInfo> {
+@TableName("t_tbmq_request_info")
+public class TTbmqRequestInfo extends Model<TTbmqRequestInfo> {
 
-    /**
-     * 主键
-     */
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private Integer id;
+    private Long id;
 
     /**
-     * 版本号
+     * url
      */
-    private String version;
+    private String url;
 
     /**
-     * 功能介绍URL
+     * 请求方式
      */
-    private String featureUrl;
+    private String requestMethod;
 
     /**
-     * 升级标识：0无需升级 1提醒升级 2强制升级
+     * 参数
      */
-    private Integer flag;
+    private String param;
 
     /**
-     * 系统: 1Android 2iOS
+     * body参数
      */
-    private String os;
+    private String body;
 
     /**
-     * 创建时间
+     * token
      */
-    private Date time;
+    private String token;
 
     /**
-     * 开始生效时间
+     * 请求类型
      */
-    private Date startTime;
+    private String type;
 
     /**
-     * 发布状态
+     * 备注
      */
-    private Integer publishStatus;
+    private String note;
 
 
 }

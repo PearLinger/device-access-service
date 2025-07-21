@@ -6,6 +6,7 @@ package com.elegoo.cloud.module.mqtt.access.kafka;
  * @date 2025/7/11 12:24
  */
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,16 @@ public class KafkaConsumerService {
   /**
    * 使用注解订阅单个主题
    */
-  @KafkaListener(topics = "test-topic", groupId = "my-group")
-  public void listenSingleTopic(String message) {
-    System.out.println("收到来自主题 test-topic 的消息: " + message);
+  @KafkaListener(topics = "tbmq.client.session", groupId = "my-group")
+  public void listenWithRecord(ConsumerRecord<String, String> record) {
+    String key = record.key();  // 获取消息的 key
+    String value = record.value();  // 获取消息的 value
+
+    System.out.println("收到消息 - Key: " + key);
+    System.out.println("收到消息 - Value: " + value);
+    System.out.println("收到消息 - 分区: " + record.partition());
+    System.out.println("收到消息 - 偏移量: " + record.offset());
+
     // 处理消息的业务逻辑
   }
 

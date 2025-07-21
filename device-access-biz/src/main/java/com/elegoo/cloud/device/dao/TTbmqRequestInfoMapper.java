@@ -1,6 +1,6 @@
 package com.elegoo.cloud.device.dao;
 
-import com.elegoo.cloud.device.entity.TAppVersionInfo;
+import com.elegoo.cloud.device.entity.TTbmqRequestInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2025-07-19
  */
 @Mapper
-public interface TAppVersionInfoMapper extends BaseMapper<TAppVersionInfo> {
+public interface TTbmqRequestInfoMapper extends BaseMapper<TTbmqRequestInfo> {
 
 }
