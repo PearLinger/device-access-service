@@ -1,7 +1,7 @@
 package com.elegoo.cloud.module.mqtt.access.mqtt.callback;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.elegoo.cloud.module.mqtt.access.kafka.KafkaProducerService;
+//import com.elegoo.cloud.module.mqtt.access.kafka.KafkaProducerService;
 import com.elegoo.cloud.module.mqtt.access.mqtt.ElegooMqttClient;
 import com.elegoo.cloud.module.mqtt.access.service.DeviceControlService;
 import com.elegoo.cloud.module.mqtt.access.util.CountMqttQps;

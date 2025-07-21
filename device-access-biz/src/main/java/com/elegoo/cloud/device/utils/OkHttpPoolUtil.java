@@ -121,4 +121,14 @@ public class OkHttpPoolUtil {
   public void cleanIdleConnections() {
     clientMap.values().forEach(client -> client.connectionPool().evictAll());
   }
+
+  public static void main(String[] args) {
+    long l = System.currentTimeMillis();
+    OkHttpPoolUtil okHttpPoolUtil = new OkHttpPoolUtil();
+    for (int i = 0; i < 1000; i++) {
+      okHttpPoolUtil.doGet("http://localhost:48093/api/device/send?command=1");
+    }
+    System.out.println(System.currentTimeMillis() - l);
+
+  }
 }

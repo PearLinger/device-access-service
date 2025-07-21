@@ -7,6 +7,8 @@ package com.elegoo.cloud.module.mqtt.access.controller;
  */
 
 import com.elegoo.cloud.module.mqtt.access.service.DeviceControlService;
+import com.elegoo.framework.mq.kafka.entity.request.KafKaRequest;
+import com.elegoo.framework.mq.kafka.producer.KafkaManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +28,18 @@ public class DeviceController {
   private final DeviceControlService deviceControlService;
 
   @Autowired
+  KafkaManager kafkaManager;
+  @Autowired
   public DeviceController(DeviceControlService deviceControlService) {
     this.deviceControlService = deviceControlService;
   }
 
-
+  @GetMapping("/send")
+  public void send() {
+//    kafkaManager.producerRecordSend("send",new KafKaRequest());
+    kafkaManager.producerRecordSend("sendList",new KafKaRequest());
+    kafkaManager.producerRecordSend("send",new KafKaRequest());
+  }
 
   @GetMapping("/command")
   public DeferredResult<?> sendCommand() {

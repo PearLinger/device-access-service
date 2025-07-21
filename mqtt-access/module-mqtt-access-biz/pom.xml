@@ -105,6 +105,12 @@
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka</artifactId>
     </dependency>
+
+    <!-- 消息队列相关 -->
+    <dependency>
+      <groupId>com.elegoo.cloud</groupId>
+      <artifactId>elegoo-spring-boot-starter-mq</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

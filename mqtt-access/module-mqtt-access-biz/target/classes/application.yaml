@@ -12,17 +12,95 @@ spring:
   kafka:
     bootstrap-servers: 192.168.3.27:9092
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: all
+      # bootstrap-servers: localhost:9092
+      # 开启事务，必须在开启了事务的方法中发送，否则报错
+      #transaction-id-prefix: kafkaTx-
+      # 发生错误后，消息重发的次数，开启事务必须设置大于0。
       retries: 3
-    consumer:
-      group-id: my-group
-      auto-offset-reset: latest
-      enable-auto-commit: true
-      auto-commit-interval: 100ms
-    listener:
-      concurrency: 3  # 消费者线程数
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      # 开启事务时，必须设置为all
+      acks: 1
+      # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 生产者内存缓冲区的大小。
+      buffer-memory: 1024000
+      # 键的序列化方式（String:org.apache.kafka.common.serialization.StringSerializer）
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式（建议使用Json，这种序列化方式可以无需额外配置传输实体类）(org.apache.kafka.common.serialization.StringSerializer)
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+        # properties:
+        # linger:
+        # ms: 2000 #提交延迟
+      # partitioner: #指定分区器
+      # class: com.example.kafkademo.config.CustomizePartitioner
+      # 消费者
+      consumer:
+        # bootstrap-servers: localhost:9092
+        # 默认的消费组ID
+#        group-id: elegoo
+        # 是否自动提交偏移量，默认值是true，为了避免出现重复数据和数据丢失，可以把它设置为false，然后手动提交偏移量
+        enable-auto-commit: false
+        # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
+        auto-commit-interval: 2s
+        # 当kafka中没有初始offset或offset超出范围时将自动重置offset
+        # earliest:重置为分区中最小的offset;
+        # latest:重置为分区中最新的offset(消费分区中新产生的数据);
+        # none:只要有一个分区不存在已提交的offset,就抛出异常;
+        auto-offset-reset: earliest
+        # 这个参数定义了poll方法最多可以拉取多少条消息，默认值为500。如果在拉取消息的时候新消息不足500条，那有多少返回多少；如果超过500条，每次只返回500。
+        # 这个默认值在有些场景下太大，有些场景很难保证能够在5min内处理完500条消息，
+        # 如果消费者无法在5分钟内处理完500条消息的话就会触发reBalance,
+        # 然后这批消息会被分配到另一个消费者中，还是会处理不完，这样这批消息就永远也处理不完。
+        # 要避免出现上述问题，提前评估好处理一条消息最长需要多少时间，然后覆盖默认的max.poll.records参数
+        # 注：需要开启BatchListener批量监听才会生效，如果不开启BatchListener则不会出现reBalance情况
+        max-poll-records: 500
+        # 键的序列化方式（String:org.apache.kafka.common.serialization.StringDeserializer）
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        # 值的序列化方式（建议使用Json，这种序列化方式可以无需额外配置传输实体类）
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+        # 配置消费者的 Json 反序列化的可信赖包，反序列化实体类需要
+        properties:
+          spring:
+            json:
+              trusted:
+                packages: "*"
+        # 重试机制
+        retry:
+          count: 3
+          timeout: 5000
+      properties:
+        # 两次poll之间的最大间隔，默认值为5分钟。如果超过这个间隔会触发reBalance
+        max:
+          poll:
+            interval:
+              ms: 600000
+        # 当broker多久没有收到consumer的心跳请求后就触发reBalance，默认值是10s
+        session:
+          timeout:
+            ms: 10000
+        # 请求的超时时间
+        request:
+          timeout:
+            ms: 30000
+      listener:
+        # RECORD：当每一条记录被消费者监听器（ListenerConsumer）处理之后提交
+        # BATCH：当每一批poll()的数据被消费者监听器（ListenerConsumer）处理之后提交
+        # TIME：当每一批poll()的数据被消费者监听器（ListenerConsumer）处理之后，距离上次提交时间大于TIME时提交
+        # COUNT：当每一批poll()的数据被消费者监听器（ListenerConsumer）处理之后，被处理record数量大于等于COUNT时提交
+        # COUNT_TIME：TIME | COUNT　有一个条件满足时提交
+        # MANUAL：当每一批poll()的数据被消费者监听器（ListenerConsumer）处理之后, 手动调用Acknowledgment.acknowledge()后提交
+        # MANUAL_IMMEDIATE：手动调用Acknowledgment.acknowledge()后立即提交，一般使用这种
+        ack-mode: manual_immediate
+        # 在侦听器容器中运行的线程数，一般设置为 机器数*分区数
+        concurrency: 4
+        # 消费监听接口监听的主题不存在时，默认会报错，所以设置为false忽略错误(consumer listener topics 不存在时，启动项目就会报错)
+        missing-topics-fatal: false
+        # 两次poll之间的最大间隔，默认值为5分钟。如果超过这个间隔会触发reBalance
+        poll-timeout: 600000
+        # single单例（默认） batch批量
+        type: single
 elegoo:
   broker:
     client-id: admin
