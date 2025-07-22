@@ -7,9 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.elegoo.cloud.device.api.dto.MqttCredentialsDTO;
-import com.elegoo.cloud.device.api.dto.MqttCredentialsDTO.AuthRules;
-import com.elegoo.cloud.device.api.dto.MqttCredentialsDTO.CredentialsValue;
 import com.elegoo.cloud.device.entity.TTbmqRequestInfo;
 import com.elegoo.cloud.device.dao.TTbmqRequestInfoMapper;
 import com.elegoo.cloud.device.service.TTbmqRequestInfoService;
@@ -19,6 +16,12 @@ import com.elegoo.cloud.device.api.query.TTbmqRequestInfoQuery;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.elegoo.cloud.device.tbmq.response.TbmqApiResponse;
 import com.elegoo.cloud.device.utils.OkHttpPoolUtil;
+import com.elegoo.framework.common.pojo.CommonResult;
+import com.elegoo.framework.thirdparty.tbmq.dto.CredentialDTO;
+import com.elegoo.framework.thirdparty.tbmq.dto.MqttCredentialsDTO;
+import com.elegoo.framework.thirdparty.tbmq.dto.MqttCredentialsDTO.AuthRules;
+import com.elegoo.framework.thirdparty.tbmq.dto.MqttCredentialsDTO.CredentialsValue;
+import com.elegoo.framework.thirdparty.tbmq.service.CredentialsService;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpClient.Version;
@@ -30,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import cn.hutool.core.util.StrUtil;
 import java.util.List;
@@ -54,8 +58,8 @@ public class TTbmqRequestInfoServiceImpl extends ServiceImpl<TTbmqRequestInfoMap
   @Autowired
   private TTbmqRequestInfoConvert convert;
 
-
-
+  @Autowired
+  private CredentialsService credentialsService;
 
 
 	@Override
@@ -112,29 +116,15 @@ public class TTbmqRequestInfoServiceImpl extends ServiceImpl<TTbmqRequestInfoMap
     }
 
   @Override
-  public Boolean credentials(MqttCredentialsDTO dto) {
-    TTbmqRequestInfoQuery tTbmqRequestInfoQuery = new TTbmqRequestInfoQuery();
-    tTbmqRequestInfoQuery.setType("credentials");
-    List<TTbmqRequestInfoVO> tTbmqRequestInfoVOS = this.queryList(tTbmqRequestInfoQuery);
-    if (CollUtil.isEmpty(tTbmqRequestInfoVOS)) {
-      return false;
-    }
-    String json = "{\"name\":\"sdsdasd\",\"clientType\":\"DEVICE\",\"credentialsType\":\"MQTT_BASIC\",\"credentialsValue\":\"{\\\"clientId\\\":\\\"sdsads\\\",\\\"userName\\\":\\\"sdsd\\\",\\\"password\\\":\\\"1\\\",\\\"authRules\\\":{\\\"pubAuthRulePatterns\\\":[\\\".*\\\"],\\\"subAuthRulePatterns\\\":[\\\".*\\\"]}}\"}";
-    MqttCredentialsDTO credentials = JSON.parseObject(json, MqttCredentialsDTO.class);
-    credentials.setName("productId-deviceId");
+  public CommonResult<CredentialDTO> credentials(MqttCredentialsDTO dto) {
+    MqttCredentialsDTO credentials = new MqttCredentialsDTO();
     CredentialsValue credentialsValue = new CredentialsValue();
-    credentialsValue.setClientId("productId-deviceId");
+    credentialsValue.setClientId("productId-deviceId444");
     credentialsValue.setPassword("productId-deviceId");
-    AuthRules authRules = new AuthRules();
-    authRules.setPubAuthRulePatterns(ListUtil.toList(".*"));
-    authRules.setSubAuthRulePatterns(ListUtil.toList(".*"));
-    credentialsValue.setAuthRules(authRules);
     credentialsValue.setUserName("productId-deviceId");
-    credentials.setCredentialsValue(JSONObject.toJSONString(credentialsValue));
-    TbmqApiResponse<Object> objectTbmqApiResponse = OkHttpPoolUtil.getInstance()
-        .doPost(JSONObject.toJSONString(credentials), tTbmqRequestInfoVOS.get(0));
-    log.info("objectTbmqApiResponse:{}", objectTbmqApiResponse);
-    return null;
+    credentials.setCredentialsValueObj(credentialsValue);
+    CommonResult<CredentialDTO> credentials1 = credentialsService.credentials(credentials);
+    return credentials1;
   }
 
   @Override

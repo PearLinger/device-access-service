@@ -29,3 +29,8 @@ elegoo:
     share: $share/
     password: admin
     client-num: 1
+  thirdparty:
+    tbmq:
+     tokenSigningKey: Qk1xUnloZ0VQTlF1VlNJQXZ4cWhiNWt1cVd1ZzQ5cWpENUhMSHlaYmZIM0JrZ2pPTVlhQ3N1Z0ZMUnd0SDBieg==
+     tokenExpirationTime: 9000000000
+     url: http://192.168.3.25:8083

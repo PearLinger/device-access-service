@@ -5,6 +5,8 @@ package com.elegoo.cloud.device.utils;
  * @version v 1.0
  * @date 2025/7/19 15:47
  */
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.elegoo.cloud.device.api.vo.TTbmqRequestInfoVO;
 import com.elegoo.cloud.device.tbmq.response.TbmqApiResponse;
 import okhttp3.*;
@@ -104,7 +106,8 @@ public class OkHttpPoolUtil {
     try (Response response = client.newCall(request).execute()) {
       if (response.isSuccessful() && response.code() == 200) {
         String body = response.body().string();
-        return new TbmqApiResponse<>((T) body);
+        T data = JSON.parseObject(body, new TypeReference<T>() {});
+        return new TbmqApiResponse<>((T) data);
       } else {
         return new TbmqApiResponse<>(
             response.code(),

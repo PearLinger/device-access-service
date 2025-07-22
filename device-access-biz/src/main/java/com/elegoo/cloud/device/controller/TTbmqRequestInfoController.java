@@ -3,6 +3,7 @@ package com.elegoo.cloud.device.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.elegoo.framework.common.pojo.CommonResult;
 import com.elegoo.cloud.device.service.TTbmqRequestInfoService;
+import com.elegoo.framework.thirdparty.tbmq.dto.CredentialDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,8 +78,8 @@ public class TTbmqRequestInfoController {
      * 修改
      */
     @PostMapping(value = "/credentials")
-    public CommonResult<Boolean> credentials() {
-        return CommonResult.success(tTbmqRequestInfoService.credentials(null));
+    public CommonResult<CredentialDTO> credentials() {
+        return tTbmqRequestInfoService.credentials(null);
     }
 
 }
