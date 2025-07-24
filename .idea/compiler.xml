@@ -15,6 +15,7 @@
         </processorPath>
         <module name="device-common" />
         <module name="device-access-biz" />
+        <module name="device-manage-biz" />
         <module name="device-access-api" />
         <module name="module-mqtt-access-api" />
         <module name="module-mqtt-access-biz" />
@@ -23,7 +24,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="device-manage-biz" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -35,7 +35,7 @@
       <module name="device-access-api" options="-parameters" />
       <module name="device-access-biz" options="-parameters" />
       <module name="device-common" options="-parameters" />
-      <module name="device-manage-biz" options="" />
+      <module name="device-manage-biz" options="-parameters" />
       <module name="module-mqtt-access-api" options="-parameters" />
       <module name="module-mqtt-access-biz" options="-parameters" />
     </option>

@@ -21,6 +21,7 @@ import org.eclipse.paho.mqttv5.client.IMqttToken;
 import org.eclipse.paho.mqttv5.client.MqttCallback;
 import org.eclipse.paho.mqttv5.client.MqttClient;
 import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
+import org.eclipse.paho.mqttv5.client.MqttTopic;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
@@ -40,7 +41,6 @@ public class ElegooMqttCallBack implements MqttCallback {
     public ElegooMqttCallBack(DeviceControlService deviceControlService, ElegooMqttClient mqttClient) {
         this.deviceControlService = deviceControlService;
         this.mqttClient = mqttClient;
-
     }
 
     @Override

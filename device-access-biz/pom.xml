@@ -82,6 +82,12 @@
     <dependency>
       <groupId>com.elegoo.cloud</groupId>
       <artifactId>elegoo-spring-boot-starter-mq</artifactId>
+      <exclusions>
+        <exclusion> <!-- 排除掉springboot依赖使用项目的 -->
+          <groupId>org.springframework.amqp</groupId>
+          <artifactId>spring-rabbit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Test 测试相关 -->
@@ -116,6 +122,11 @@
     <dependency>
       <groupId>com.elegoo.cloud</groupId>
       <artifactId>elegoo-spring-boot-starter-third-party</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
     </dependency>
   </dependencies>
 

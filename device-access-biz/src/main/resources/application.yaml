@@ -34,3 +34,16 @@ elegoo:
      tokenSigningKey: Qk1xUnloZ0VQTlF1VlNJQXZ4cWhiNWt1cVd1ZzQ5cWpENUhMSHlaYmZIM0JrZ2pPTVlhQ3N1Z0ZMUnd0SDBieg==
      tokenExpirationTime: 9000000000
      url: http://192.168.3.25:8083
+mqtt:
+  disable: false
+  clients:
+    multi_client_1:
+     uri: tcp://192.168.3.25:1883
+     client-id: productId-deviceId2sd2222
+     username: productId-deviceId
+     password: productId-deviceId
+    multi_client_2:
+      uri: tcp://192.168.3.25:1883
+      client-id: productId-deviceId444
+      username: productId-deviceId
+      password: productId-deviceId

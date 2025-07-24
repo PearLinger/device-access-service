@@ -131,11 +131,11 @@ public class MqttMessageProduce implements InitializingBean {
     ExecutorService executorService = new ThreadPoolExecutor(10,
         50, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(100000), new ThreadPoolExecutor.CallerRunsPolicy());
 
-    for (int i = 0; i < 50000; i++) {
+    for (int i = 0; i < 500000; i++) {
       final int messageIndex = i;
       // 提交任务到线程池
       executorService.submit(() -> {
-        rinoMqttClient.publish("/test/test", "test" + messageIndex, 0);
+        rinoMqttClient.publish("test/s/sd", "test" + messageIndex, 0);
       });
     }
 
