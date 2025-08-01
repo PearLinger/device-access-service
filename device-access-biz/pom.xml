@@ -121,7 +121,7 @@
 
     <dependency>
       <groupId>com.elegoo.cloud</groupId>
-      <artifactId>elegoo-spring-boot-starter-third-party</artifactId>
+      <artifactId>elegoo-spring-boot-starter-tbmq</artifactId>
     </dependency>
 
     <dependency>

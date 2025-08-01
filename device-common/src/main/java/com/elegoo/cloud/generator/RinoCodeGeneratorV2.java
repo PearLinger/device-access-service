@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class RinoCodeGeneratorV2 {
     //表名称
-    private static String[] tableNames = new String[]{"t_tbmq_request_info"};
+    private static String[] tableNames = new String[]{"t_app_mqtt_link_info"};
     //路由名称
-    private String controllerPathName = "tbmq-request-info";
+    private String controllerPathName = "device-app-mqtt-link";
     //数据库名称
     private String databaseName = "elegoo";
     //模块名称
