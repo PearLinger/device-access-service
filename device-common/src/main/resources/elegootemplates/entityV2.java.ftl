@@ -68,7 +68,7 @@ public class ${entity} {
         <#if field.keyIdentityFlag>
     @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
         <#elseif idType??>
-    @TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
+    @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
         <#elseif field.convert>
     @TableId("${field.annotationColumnName}")
         </#if>

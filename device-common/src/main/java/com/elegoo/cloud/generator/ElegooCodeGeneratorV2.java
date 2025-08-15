@@ -13,7 +13,7 @@ import java.util.Map;
 public class ElegooCodeGeneratorV2 {
 
   //表名称
-  private static String[] tableNames = new String[]{"t_product_type_info"};
+  private static String[] tableNames = new String[]{"t_serial_no_info"};
   //路由名称
   private String controllerPathName = "product-type-info";
   //数据库名称
@@ -53,7 +53,7 @@ public class ElegooCodeGeneratorV2 {
     FastAutoGenerator.create(url, userName, password)
         .globalConfig(builder -> {
           builder.author(author) // 设置作者
-              .fileOverride() // 覆盖已生成文件,感觉不好使,应该用其他方式,懒得看了
+              .fileOverride() // 覆盖已生成文件
               .disableOpenDir()//不打开文件夹
               .dateType(DateType.ONLY_DATE)//全局日期使用util下Date
               .outputDir(classDir); // 指定输出目录
@@ -63,11 +63,10 @@ public class ElegooCodeGeneratorV2 {
               .pathInfo(Collections.singletonMap(OutputFile.xml, mapperDir)) // 设置mapperXml生成路径
           ;
         }).templateConfig(builder -> {
-          builder.service("/elegootemplates/serviceV2.java")
-              .serviceImpl("/elegootemplates/serviceImplV2.java");
-          builder.controller("/elegootemplates/controllerV2.java");
+          builder.controller("").disable();
           builder.mapper("");
           builder.xml("/elegootemplates/mapperV2.xml");
+          builder.entity("").disable();
         }).injectionConfig(consumer -> {
           //自定义参数
           Map<String, Object> customMap = new HashMap<>();
@@ -92,11 +91,15 @@ public class ElegooCodeGeneratorV2 {
 
           // 自定义模板
           Map<String, String> customFile = new HashMap<>();
-          //customFile.put("DTO.java", "/elegootemplates/entityDTO.java.ftl");
-          //customFile.put("VO.java", "/elegootemplates/entityVO.java.ftl");
-          //customFile.put("Query.java", "/elegootemplates/entityQuery.java.ftl");
           customFile.put("Mapper.java", "/elegootemplates/mapperV2.java.ftl");
           customFile.put("Convert.java", "/elegootemplates/convertV2.java.ftl");
+          customFile.put("ReqVO.java", "/elegootemplates/entityReqVO.java.ftl");
+          customFile.put("RespVO.java", "/elegootemplates/entityRespVO.java.ftl");
+          customFile.put("QueryBO.java", "/elegootemplates/entityQueryBO.java.ftl");
+          customFile.put("Service.java", "/elegootemplates/serviceV2.java.ftl");
+          customFile.put("ServiceImpl.java", "/elegootemplates/serviceImplV2.java.ftl");
+          customFile.put("Entity.java", "/elegootemplates/entityV2.java.ftl");
+          customFile.put("Controller.java", "/elegootemplates/controllerV2.java.ftl");
           if (isFacade) {
             customFile.put("FacadeService.java", "/elegootemplates/entityFacadeServiceV2.java.ftl");
           }
@@ -144,21 +147,20 @@ public class ElegooCodeGeneratorV2 {
           customMap.put("dtoPackage", basePackage + ".dto");
           customMap.put("dtoApiPackage", basePackage + ".api.dto");
           customMap.put("voApiPackage", basePackage + ".api.vo");
-          customMap.put("voPackage", basePackage + ".vo");
           customMap.put("queryPackage", basePackage + ".query");
           customMap.put("module", moduleFacadeName);
           customMap.put("facadePackage", basePackage);
           customMap.put("ServiceNameConstants", serviceNameConstants);
           customMap.put("errorCode", errorCode);
           customMap.put("mapperAnnotation", true);
+          customMap.put("apiConstants", basePackage + ".constants");
           consumer.customMap(customMap);
 
           // 自定义模板
           Map<String, String> customFile = new HashMap<>();
           customFile.put("DTO.java", "/elegootemplates/entityDTO.java.ftl");
-          customFile.put("VO.java", "/elegootemplates/entityVO.java.ftl");
-          customFile.put("Query.java", "/elegootemplates/entityQuery.java.ftl");
           customFile.put("Facade.java", "/elegootemplates/entityFacadeV2.java.ftl");
+          customFile.put("ApiConstants.java", "/elegootemplates/apiConstantsV2.java.ftl");
           consumer.customFile(customFile);
         }).strategyConfig(builder -> {
           builder.addInclude(tableName) // 设置需要生成的表名

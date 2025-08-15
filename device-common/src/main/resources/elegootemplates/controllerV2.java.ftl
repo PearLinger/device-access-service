@@ -18,9 +18,9 @@ import org.springframework.stereotype.Controller;
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
-import ${dtoPackageFacade}.${entity}DTO;
+
 import ${voPackageFacade}.${entity}VO;
-import ${queryPackageFacade}.${entity}Query;
+
 
 <#list table.fields as field>
     <#if field.keyFlag>

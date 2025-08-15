@@ -50,15 +50,20 @@ public class EnhanceFreemarkerTemplateFacadeEngine extends FreemarkerTemplateEng
                 otherPath = otherPath + "dto";
             } else if (key.equals("VO.java")) {
                 otherPath = otherPath + "vo";
-            } else if (key.equals("Query.java")) {
-                otherPath = otherPath + "query";
             } else if(key.equals("FacadeFallback.java")){
                 otherPath = otherPath + "hystrix";
             } else if(key.equals("Convert.java")){
                 otherPath = otherPath + "convert";
+            } else if(key.equals("ApiConstants.java")){
+                otherPath = otherPath + "constants";
+            }
+            String fileName = "";
+            if (key.equals("ApiConstants.java")) {
+                fileName = String.format(otherPath + File.separator + "%s", key);
+            }else{
+                fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             }
 
-            String fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             if (key.equals("DTO.java") || key.equals("VO.java") || key.equals("Query.java")) {
                 this.outputFile(new File(fileName), objectMap, value,true);
             } else {

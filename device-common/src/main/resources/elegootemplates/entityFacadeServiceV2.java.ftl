@@ -30,39 +30,8 @@ import java.util.List;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
 @RestController
-@RequiredArgsConstructor
-public class ${entity}FacadeService implements ${entity}Facade {
+@Validated
+public class ${entity}ApiImpl implements ${entity}Api {
 
-    private final ${entity}Service ${entity?uncap_first}Service;
-
-    @Override
-    public PageResult<${entity}VO> queryPage(${entity}Query pageDTO){
-        return ${entity?uncap_first}Service.queryPage(pageDTO);
-    }
-
-    @Override
-    public List<${entity}VO> queryList(${entity}Query query){
-        return ${entity?uncap_first}Service.queryList(query);
-    }
-
-    @Override
-    public ${entity}VO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
-        return ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
-    }
-
-    @Override
-    public Boolean add(${entity}DTO dto){
-        return ${entity?uncap_first}Service.add(dto);
-    }
-
-    @Override
-    public Boolean updateBy${keyPropertyName?cap_first}(${entity}DTO dto){
-        return ${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(dto);
-    }
-
-    @Override
-    public Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
-        return ${entity?uncap_first}Service.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
-    }
 }
 </#if>

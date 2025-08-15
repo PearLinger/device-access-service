@@ -1,4 +1,4 @@
-package ${voPackage};
+package ${package.Controller}.vo;
 
 <#if swagger>
 import io.swagger.annotations.ApiModel;
@@ -29,7 +29,7 @@ import java.util.Date;
 <#if swagger>
 @ApiModel(value = "${entity}VO对象", description = "${table.comment!}")
 </#if>
-public class ${entity}VO {
+public class ${entity}ReqVO {
 <#if entitySerialVersionUID>
 
     private static final long serialVersionUID = 1L;

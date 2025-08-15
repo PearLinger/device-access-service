@@ -1,4 +1,4 @@
-package ${queryPackage};
+package ${package.Controller}.bo;
 
 <#if swagger>
 import io.swagger.annotations.ApiModel;
@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 import java.util.Date;
-import com.elegoo.framework.common.pojo.PageParam;
+import com.elegoo.framework.common.pojo.SortablePageParam;
 /**
 * <p>
 * ${table.comment!}
@@ -27,9 +27,9 @@ import com.elegoo.framework.common.pojo.PageParam;
 </#if>
 </#if>
 <#if swagger>
-@ApiModel(value = "${entity}Query对象", description = "${table.comment!}")
+@ApiModel(value = "${entity}BO对象", description = "${table.comment!}")
 </#if>
-public class ${entity}Query extends PageParam{
+public class ${entity}BO extends SortablePageParam{
 <#if entitySerialVersionUID>
 
     private static final long serialVersionUID = 1L;

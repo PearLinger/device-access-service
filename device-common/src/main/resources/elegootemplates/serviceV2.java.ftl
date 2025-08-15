@@ -25,7 +25,7 @@ import com.elegoo.framework.common.pojo.PageResult;
 <#if kotlin>
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
-public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+public interface I${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     PageResult<${entity}VO> queryPage(${entity}Query pageDTO);
 
