@@ -37,7 +37,7 @@ mqtt:
   disable: false
   clients:
     multi_client_1:
-     uri: tcp://192.168.3.25:1883
+     uri: tcp://192.168.3.99:1883
      client-id: productId-deviceId2sd2222
      username: productId-deviceId
      password: productId-deviceId
