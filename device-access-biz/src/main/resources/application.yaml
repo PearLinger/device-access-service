@@ -1,48 +1,12 @@
 spring:
   application:
-    name: device-management-server
+    name: device-access-server
   profiles:
-    active: dev
+    active: local
   config:
     import:
       - optional:classpath:application-${spring.profiles.active}.yaml # 加载【本地】配置
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yaml # 加载【Nacos】的配置
-  kafka:
-    bootstrap-servers: 192.168.3.27:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: all
-      retries: 3
-    consumer:
-      group-id: my-group
-      auto-offset-reset: latest
-      enable-auto-commit: true
-      auto-commit-interval: 100ms
-    listener:
-      concurrency: 3  # 消费者线程数
 elegoo:
-  broker:
-    client-id: admin
-    url: 192.168.3.25:1883
-    username: admin
-    share: $share/
-    password: admin
-    client-num: 1
-  tbmq:
-   tokenSigningKey: Qk1xUnloZ0VQTlF1VlNJQXZ4cWhiNWt1cVd1ZzQ5cWpENUhMSHlaYmZIM0JrZ2pPTVlhQ3N1Z0ZMUnd0SDBieg==
-   tokenExpirationTime: 9000000000
-   url: http://192.168.3.25:8083
-mqtt:
-  disable: false
-  clients:
-    multi_client_1:
-     uri: tcp://192.168.3.99:1883
-     client-id: productId-deviceId2sd2222
-     username: productId-deviceId
-     password: productId-deviceId
-    multi_client_2:
-      uri: tcp://192.168.3.25:1883
-      client-id: productId-deviceId444
-      username: productId-deviceId
-      password: productId-deviceId
+  env:
+    tag: dev

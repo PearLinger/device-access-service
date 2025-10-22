@@ -13,9 +13,9 @@ import java.util.Map;
 public class ElegooCodeGeneratorV2 {
 
   //表名称
-  private static String[] tableNames = new String[]{"t_serial_no_info"};
+  private static String[] tableNames = new String[]{"t_device_event_data_info"};
   //路由名称
-  private String controllerPathName = "product-type-info";
+  private String controllerPathName = "event-data-info";
   //数据库名称
   private String databaseName = "elegoo";
   //模块名称
@@ -24,7 +24,7 @@ public class ElegooCodeGeneratorV2 {
   private Boolean isFacade = true;
   private Boolean isCache = false;//是否生成缓存
   //数据库url
-  private String url = "jdbc:postgresql://192.168.3.25:15432/elegoo-cloud-device-management?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
+  private String url = "jdbc:postgresql://192.168.3.25:15432/elegoo-cloud-device-data?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
   private String userName = "user_mmijbx";
   private String password = "password_ifrepx";
 
