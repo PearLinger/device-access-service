@@ -2,7 +2,8 @@ package ${package.Controller};
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.voxel.dance.api.result.AjaxResult;
-import ${package.Service}.${entity}Service;
+import ${package.Service}.I${table.serviceName};
+import ${package.Controller}.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,8 +42,7 @@ import ${superControllerClassPackage};
 @Controller
 </#if>
 @RequiredArgsConstructor
-@RequestMapping("/v1<#if pathName?? && pathName != "">/${pathName}</#if>/<#if controllerMappingHyphenStyle>${controllerMappingHyphen}<#else>${entity?replace("([a-z])([A-Z]+)",
-"$1/$2","r")?lower_case}</#if>")
+@RequestMapping("/api/tp<#if pathName?? && pathName != "">/${pathName}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
@@ -52,14 +52,14 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    private final ${entity}Service ${entity?uncap_first}Service;
+    private final I${entity}Service ${entity?uncap_first}Service;
 
     /**
      * 查询分页数据
      */
     @PostMapping(value = "/queryPage")
-    public AjaxResult<PageResult<${entity}VO>> queryPage(@RequestBody ${entity}Query pageDTO) {
-        PageResult<${entity}VO> page = ${entity?uncap_first}Service.queryPage(pageDTO);
+    public AjaxResult<PageResult<${entity}RespVO>> queryPage(@RequestBody ${entity}ReqVO vo) {
+        PageResult<${entity}RespVO> page = ${entity?uncap_first}Service.queryPage(vo);
         return AjaxResult.success(page);
     }
 
@@ -67,8 +67,8 @@ public class ${table.controllerName} {
      * 根据${entity?uncap_first}Id查询
      */
     @PostMapping(value = "/getBy${keyPropertyName?cap_first}")
-    public AjaxResult<${entity}VO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
-        ${entity}VO result = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
+    public AjaxResult<${entity}RespVO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
+        ${entity}RespVO = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
         return AjaxResult.success(result);
     }
 
@@ -76,16 +76,16 @@ public class ${table.controllerName} {
      * 新增
      */
     @PostMapping(value = "/add")
-    public AjaxResult<Boolean> add(@RequestBody ${entity}DTO dto) {
-        return AjaxResult.success(${entity?uncap_first}Service.add(dto));
+    public AjaxResult<Boolean> add(@RequestBody ${entity}ReqVO vo) {
+        return AjaxResult.success(${entity?uncap_first}Service.add(vo));
     }
 
     /**
      * 修改
      */
     @PostMapping(value = "/updateBy${keyPropertyName?cap_first}")
-    public AjaxResult<Boolean> updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}DTO dto) {
-        return AjaxResult.success(${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(dto));
+    public AjaxResult<Boolean> updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}ReqVO vo) {
+        return AjaxResult.success(${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(vo));
     }
 
     /**

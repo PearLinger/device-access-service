@@ -1,12 +1,13 @@
-package ${ormPackage}.iService.impl;
+package ${package.ServiceImpl};
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${entityPackage}.${entity};
-import ${boPackage}.${entity}BO;
 import ${mapperPackage}.${table.mapperName};
-import  ${ormPackage}.iService.I${table.entityName}DataService;
+import ${boPackage}.${entity}BO;
+import ${ormPackage}.iService.I${table.entityName}DataService;
+import ${package.Service}.I${table.serviceName};
 import ${superServiceImplClassPackage};
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,88 +15,85 @@ import org.springframework.stereotype.Service;
 import cn.hutool.core.util.StrUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.elegoo.framework.common.exception.ServiceException;
-import com.elegoo.framework.common.exception.enums.GlobalErrorCodeConstants;
+import ${basePackage}.converts.${entity}Convert;
+import com.voxel.dance.common.pojo.PageResult;
+import javax.annotation.Resource;
+import ${package.Controller}.vo.*;
+import com.voxel.dance.tango.framework.exception.ServiceException;
+import com.voxel.dance.tango.enums.HttpStatusCodeEnum;
 <#list table.fields as field>
-<#if field.keyFlag>
-    <#assign keyPropertyName="${field.propertyName}"/>
-</#if>
+    <#if field.keyFlag>
+        <#assign keyPropertyName="${field.propertyName}"/>
+    </#if>
 </#list>
 
 /**
- * <p>
- * ${table.comment!} 服务实现类
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
+* <p>
+    * ${table.comment!} 服务实现类
+    * </p>
+*
+* @author ${author}
+* @since ${date}
+*/
 @Slf4j
 @Service
 @RequiredArgsConstructor
-<#if kotlin>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
-
-}
-<#else>
-public class ${table.entityName}DataService extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements I${table.entityName}DataService {
-
-	  @Override
-    public Page<${entity}> queryPage(${entity}BO bo) {
-        Page<${entity}> page = new Page<${entity}>(bo.getPageNo(),bo.getPageSize());
-        LambdaQueryWrapper<${entity}> lqw = getWrapper(bo);
-        page = this.page(page,lqw);
-        return page;
+public class ${table.serviceImplName} implements I${table.serviceName} {
+@Resource
+private ${entity}Convert convert;
+@Resource
+private I${table.entityName}DataService ${entity?uncap_first}DataService;
+    @Override
+    public PageResult<${entity}RespVO> queryPage(${entity}ReqVO vo) {
+    ${entity}BO bo = convert.reqVOConvertToBO(vo);
+    Page<${entity}> page = ${entity?uncap_first}DataService.queryPage(bo);
+    return convert.pageEntityConvertToVO(page);
     }
 
     @Override
-    public List<${entity}> queryList(${entity}BO query) {
-        LambdaQueryWrapper<${entity}> lqw = getWrapper(query);
-        List<${entity}> list = this.list(lqw);
-        return list;
+    public List<${entity}RespVO> queryList(${entity}ReqVO vo) {
+    ${entity}BO bo = convert.reqVOConvertToBO(vo);
+    List<${entity}> list = ${entity?uncap_first}DataService.queryList(bo);
+    return convert.listEntitysConvertToVO(list);
     }
 
 
     @Override
-    public ${entity} getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
-        ${entity} record = super.getById(${keyPropertyName?uncap_first});
-        return record;
+    public ${entity}RespVO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
+    if (${keyPropertyName?uncap_first} == null){
+    throw new ServiceException(HttpStatusCodeEnum.PARAM_VALIDATION_FAILED);
+    }
+    ${entity} record = ${entity?uncap_first}DataService.getById(${keyPropertyName?uncap_first});
+    return convert.entityConvertToRespVO(record);
     }
 
     @Override
-    public Boolean add(${entity} entity){
-        return this.save(entity);
+    public Boolean add(${entity}ReqVO vo){
+    valParams(vo);
+    ${entity} record = convert.reqVOConvertToEntity(vo);
+    return ${entity?uncap_first}DataService.add(record);
     }
 
     @Override
-    public Boolean updateEntity(${entity} entity){
-        return super.updateById(entity);
+    public Boolean updateBy${keyPropertyName?cap_first}(${entity}ReqVO vo){
+    if(ObjectUtil.isEmpty(vo.get${keyPropertyName?cap_first}())){
+    throw new ServiceException(HttpStatusCodeEnum.PARAM_VALIDATION_FAILED);
+    }
+    valParams(vo);
+    ${entity} record = convert.reqVOConvertToEntity(vo);
+    return ${entity?uncap_first}DataService.updateEntity(record);
     }
 
+        private void valParams(${entity}ReqVO vo){
+        }
 
     @Override
     public Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first}){
-        return super.removeById(${keyPropertyName?uncap_first});
+    if (${keyPropertyName?uncap_first} == null){
+    throw new ServiceException(HttpStatusCodeEnum.PARAM_VALIDATION_FAILED);
+    }
+    return ${entity?uncap_first}DataService.removeById(${keyPropertyName?uncap_first});
     }
 
-    private LambdaQueryWrapper<${entity}> getWrapper(${entity}BO query) {
-        LambdaQueryWrapper<${entity}> lqw = new LambdaQueryWrapper<>();
-        if (query != null) {
-            <#list table.fields as field>
-            <#if field.propertyType == 'String'>
-            if(StrUtil.isNotEmpty(query.get${field.propertyName?cap_first}())){
-                lqw.eq(${entity}::get${field.propertyName?cap_first}, query.get${field.propertyName?cap_first}());
-            }
-            </#if>
-            <#if field.propertyType != 'String'>
-            if(query.get${field.propertyName?cap_first}() != null){
-                lqw.eq(${entity}::get${field.propertyName?cap_first}, query.get${field.propertyName?cap_first}());
-            }
-            </#if>
-            </#list>
-        }
-        lqw.orderByDesc(${entity}::get${keyPropertyName?cap_first});
-        return lqw;
-    }
-}
-</#if>
+
+   }

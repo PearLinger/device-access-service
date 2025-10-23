@@ -1,10 +1,11 @@
-package ${ormPackage}.iService;
+package ${package.Service};
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${entityPackage}.${entity};
-import ${boPackage}.${entity}BO;
 import ${superServiceClassPackage};
+import ${package.Controller}.vo.*;
 import java.util.List;
+import com.voxel.dance.common.pojo.PageResult;
 <#list table.fields as field>
     <#if field.keyFlag>
         <#assign keyPropertyName="${field.propertyName}"/>
@@ -12,28 +13,25 @@ import java.util.List;
 </#list>
 
 /**
- * <p>
- * ${table.comment!} 服务类
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
-<#if kotlin>
-interface ${table.serviceName} : ${superServiceClass}<${entity}>
-<#else>
-public interface I${table.entityName}DataService extends ${superServiceClass}<${entity}> {
+* <p>
+  * ${table.comment!} 服务类
+  * </p>
+*
+* @author ${author}
+* @since ${date}
+*/
+public interface I${table.serviceName} {
 
-    Page<${entity}> queryPage(${entity}BO queryBO);
+    PageResult<${entity}RespVO> queryPage(${entity}ReqVO vo);
 
-    List<${entity}> queryList(${entity}BO queryBO);
+    List<${entity}RespVO> queryList(${entity}ReqVO query);
 
-    ${entity} getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first});
+    ${entity}RespVO getBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first});
 
-    Boolean add(${entity} entity);
+    Boolean add(${entity}ReqVO vo);
 
-    Boolean updateEntity(${entity} entity);
+    Boolean updateBy${keyPropertyName?cap_first}(${entity}ReqVO vo);
 
     Boolean removeBy${keyPropertyName?cap_first}(Long ${keyPropertyName?uncap_first});
-}
-</#if>
+    }
+

@@ -1,13 +1,13 @@
-package ${package.Service};
+package ${basePackage}.converts;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ${package.Entity}.${entity};
-import ${dtoApiPackage}.${entity}DTO;
-import ${voApiPackage}.${entity}VO;
+import ${entityPackage}.${entity};
+import ${package.Controller}.vo.*;
 import java.util.List;
 import com.voxel.dance.common.pojo.PageResult;
+import ${boPackage}.${entity}BO;
 
 /**
 * <p>
@@ -21,11 +21,14 @@ import com.voxel.dance.common.pojo.PageResult;
 @Mapper(componentModel = "spring")
 public interface ${entity}Convert {
       @Mapping(source = "records", target = "list")
-      PageResult<${entity}VO> pageEntityConvertToVO(Page<${entity}> pageInfo);
+      PageResult<${entity}RespVO> pageEntityConvertToVO(Page<${entity}> pageInfo);
 
-      ${entity} dtoConvertToEntity(${entity}DTO dto);
+      ${entity}BO reqVOConvertToBO(${entity}ReqVO reqVO);
 
-      ${entity}VO entityConvertToVO(${entity} entity);
+      ${entity}RespVO entityConvertToRespVO(${entity} entity);
 
-      List<${entity}VO> entitysConvertToVO(List<${entity}> entitys);
+      List<${entity}RespVO> listEntitysConvertToVO(List<${entity}> entitys);
+
+      ${entity} reqVOConvertToEntity(${entity}ReqVO reqVO);
+
   }

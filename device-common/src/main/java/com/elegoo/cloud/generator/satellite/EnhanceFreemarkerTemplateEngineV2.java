@@ -21,7 +21,7 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
             if (key.equals("DTO.java")) {
                 otherPath = otherPath + "dto";
             } else if (key.equals("RespVO.java") || key.equals("ReqVO.java")) {
-                otherPath = otherPath + "api\\vo";
+                otherPath = otherPath + "controller\\vo";
             } else if (key.equals("QueryBO.java")) {
                 otherPath = otherPath + "domain\\bo";
             } else if(key.equals("FacadeService.java")){
@@ -29,7 +29,7 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
             } else if (key.equals("Mapper.java")) {
                 otherPath = otherPath + "orm\\dao";
             } else if(key.equals("Convert.java")){
-                otherPath = otherPath + "convert";
+                otherPath = otherPath + "converts";
             } else if(key.equals("DataService.java") ||  key.equals("DataServiceImpl.java")){
                 if(key.equals("DataService.java")){
                     otherPath = otherPath + "orm\\iService";

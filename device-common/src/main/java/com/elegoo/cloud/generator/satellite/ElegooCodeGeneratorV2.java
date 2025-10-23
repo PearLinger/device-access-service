@@ -16,11 +16,11 @@ public class ElegooCodeGeneratorV2 {
 //  private static String[] tableNames = new String[]{"tp_operation_record","tp_operation_record_count"};
   private static String[] tableNames = new String[]{"tp_operation_record"};
   //路由名称
-  private String controllerPathName = "event-data-info";
+  private String controllerPathName = "operation-record";
   //数据库名称
   private String databaseName = "elegoo";
   //模块名称
-  private String moduleName = "device";
+  private String moduleName = "tango";
   //数据库url
   private String url = "jdbc:postgresql://192.168.3.25:15432/test1018?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
   private String userName = "user_mmijbx";
@@ -34,7 +34,7 @@ public class ElegooCodeGeneratorV2 {
   //mapper文件目录
   private String mapperDir = outPutDir + "/src/main/resources/mapper";
   //根包目录
-  private String rootPackage = "com.elegoo.cloud";
+  private String rootPackage = "com.voxel.dance";
 
   //facade目录
   private String outPutProviderFacadeDir = System.getProperty("user.dir") + "/device-access-api";
@@ -81,6 +81,7 @@ public class ElegooCodeGeneratorV2 {
           customMap.put("boPackage", basePackage + ".bo");
           customMap.put("ormPackage", basePackage + ".orm");
           customMap.put("entityPackage", basePackage + ".domain.po");
+          customMap.put("basePackage", basePackage);
           customMap.put("mapperAnnotation", true);
           consumer.customMap(customMap);
 
@@ -93,7 +94,9 @@ public class ElegooCodeGeneratorV2 {
           customFile.put("RespVO.java", "/satellite/entityRespVO.java.ftl");
           customFile.put("QueryBO.java", "/satellite/entityBO.java.ftl");
           customFile.put("DataService.java", "/satellite/dataserviceV2.java.ftl");
+          customFile.put("Service.java", "/satellite/serviceV2.java.ftl");
           customFile.put("DataServiceImpl.java", "/satellite/dataserviceImplV2.java.ftl");
+          customFile.put("ServiceImpl.java", "/satellite/serviceImplV2.java.ftl");
           customFile.put("Entity.java", "/satellite/entityV2.java.ftl");
           customFile.put("Controller.java", "/satellite/controllerV2.java.ftl");
           consumer.customFile(customFile);
