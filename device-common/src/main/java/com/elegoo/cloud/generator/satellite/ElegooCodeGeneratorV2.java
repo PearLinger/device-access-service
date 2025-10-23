@@ -14,9 +14,9 @@ public class ElegooCodeGeneratorV2 {
 
   //表名称
 //  private static String[] tableNames = new String[]{"tp_operation_record","tp_operation_record_count"};
-  private static String[] tableNames = new String[]{"tp_operation_record"};
+  private static String[] tableNames = new String[]{"tp_community_material_param"};
   //路由名称
-  private String controllerPathName = "operation-record";
+  private String controllerPathName = "community-material-param";
   //数据库名称
   private String databaseName = "elegoo";
   //模块名称
@@ -28,8 +28,8 @@ public class ElegooCodeGeneratorV2 {
 
   private String author = "yangyi";//作者
   //文件路径
-  private String outPutDir = System.getProperty("user.dir") + "/device-access-biz";
-  private String outPutDir2 = System.getProperty("user.dir") + "/device-manage-biz";
+  private String outPutDir = System.getProperty("user.dir") + "/voxel-dance-repository";
+  private String outPutDir2 = System.getProperty("user.dir") + "/voxel-dance-service";
   //class目录
   private String classDir = outPutDir + "/src/main/java";
   private String classDir2 = outPutDir2 + "/src/main/java";
@@ -163,6 +163,7 @@ public class ElegooCodeGeneratorV2 {
           Map<String, String> customFile = new HashMap<>();
           customFile.put("Convert.java", "/satellite/convertV2.java.ftl");
           customFile.put("ReqVO.java", "/satellite/entityReqVO.java.ftl");
+          customFile.put("ReqVO.java", "/satellite/entityPageReqVO.java.ftl");
           customFile.put("RespVO.java", "/satellite/entityRespVO.java.ftl");
           customFile.put("Service.java", "/satellite/serviceV2.java.ftl");
           customFile.put("ServiceImpl.java", "/satellite/serviceImplV2.java.ftl");

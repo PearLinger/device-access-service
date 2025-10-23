@@ -27,6 +27,8 @@ public interface ${entity}Convert {
 
       ${entity}BO reqVOConvertToBO(${entity}ReqVO reqVO);
 
+      ${entity}BO reqPageVOConvertToBO(${entity}PageReqVO reqVO);
+
       ${entity}RespVO entityConvertToRespVO(${entity} entity);
 
       List<${entity}RespVO> listEntitysConvertToVO(List<${entity}> entitys);

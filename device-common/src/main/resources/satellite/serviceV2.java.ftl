@@ -22,7 +22,7 @@ import com.voxel.dance.common.pojo.PageResult;
 */
 public interface I${table.serviceName} {
 
-    PageResult<${entity}RespVO> queryPage(${entity}ReqVO vo);
+    PageResult<${entity}RespVO> queryPage(${entity}PageReqVO vo);
 
     List<${entity}RespVO> queryList(${entity}ReqVO query);
 

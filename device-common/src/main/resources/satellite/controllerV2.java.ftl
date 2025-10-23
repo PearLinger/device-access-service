@@ -58,7 +58,7 @@ public class ${table.controllerName} {
      * 查询分页数据
      */
     @PostMapping(value = "/queryPage")
-    public AjaxResult<PageResult<${entity}RespVO>> queryPage(@RequestBody ${entity}ReqVO vo) {
+    public AjaxResult<PageResult<${entity}RespVO>> queryPage(@RequestBody ${entity}PageReqVO vo) {
         PageResult<${entity}RespVO> page = ${entity?uncap_first}Service.queryPage(vo);
         return AjaxResult.success(page);
     }

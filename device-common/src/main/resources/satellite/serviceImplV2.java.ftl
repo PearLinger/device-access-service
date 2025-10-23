@@ -42,8 +42,8 @@ private static ${entity}Convert convert = ${entity}Convert.INSTANCE;
 @Resource
 private I${table.entityName}DataService ${entity?uncap_first}DataService;
     @Override
-    public PageResult<${entity}RespVO> queryPage(${entity}ReqVO vo) {
-    ${entity}BO bo = convert.reqVOConvertToBO(vo);
+    public PageResult<${entity}RespVO> queryPage(${entity}PageReqVO vo) {
+    ${entity}BO bo = convert.reqPageVOConvertToBO(vo);
     Page<${entity}> page = ${entity?uncap_first}DataService.queryPage(bo);
     return convert.pageEntityConvertToVO(page);
     }
