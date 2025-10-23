@@ -1,4 +1,4 @@
-package com.elegoo.cloud.generator;
+package com.elegoo.cloud.generator.satellite;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -21,7 +21,7 @@ public class ElegooCodeGeneratorV2 {
   //模块名称
   private String moduleName = "device";
   //是否生成facade接口
-  private Boolean isFacade = true;
+  private Boolean isFacade = false;
   private Boolean isCache = false;//是否生成缓存
   //数据库url
   private String url = "jdbc:postgresql://192.168.3.25:15432/test1018?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
@@ -65,7 +65,7 @@ public class ElegooCodeGeneratorV2 {
         }).templateConfig(builder -> {
           builder.controller("").disable();
           builder.mapper("");
-          builder.xml("/elegootemplates/mapperV2.xml");
+          builder.xml("/satellite/mapperV2.xml");
           builder.entity("").disable();
         }).injectionConfig(consumer -> {
           //自定义参数
@@ -91,17 +91,17 @@ public class ElegooCodeGeneratorV2 {
 
           // 自定义模板
           Map<String, String> customFile = new HashMap<>();
-          customFile.put("Mapper.java", "/elegootemplates/mapperV2.java.ftl");
-          customFile.put("Convert.java", "/elegootemplates/convertV2.java.ftl");
-          customFile.put("ReqVO.java", "/elegootemplates/entityReqVO.java.ftl");
-          customFile.put("RespVO.java", "/elegootemplates/entityRespVO.java.ftl");
-          customFile.put("QueryBO.java", "/elegootemplates/entityQueryBO.java.ftl");
-          customFile.put("Service.java", "/elegootemplates/serviceV2.java.ftl");
-          customFile.put("ServiceImpl.java", "/elegootemplates/serviceImplV2.java.ftl");
-          customFile.put("Entity.java", "/elegootemplates/entityV2.java.ftl");
-          customFile.put("Controller.java", "/elegootemplates/controllerV2.java.ftl");
+          customFile.put("Mapper.java", "/satellite/mapperV2.java.ftl");
+          customFile.put("Convert.java", "/satellite/convertV2.java.ftl");
+          customFile.put("ReqVO.java", "/satellite/entityReqVO.java.ftl");
+          customFile.put("RespVO.java", "/satellite/entityRespVO.java.ftl");
+          customFile.put("QueryBO.java", "/satellite/entityBO.java.ftl");
+          customFile.put("Service.java", "/satellite/serviceV2.java.ftl");
+          customFile.put("ServiceImpl.java", "/satellite/serviceImplV2.java.ftl");
+          customFile.put("Entity.java", "/satellite/entityV2.java.ftl");
+          customFile.put("Controller.java", "/satellite/controllerV2.java.ftl");
           if (isFacade) {
-            customFile.put("FacadeService.java", "/elegootemplates/entityFacadeServiceV2.java.ftl");
+            customFile.put("FacadeService.java", "/satellite/entityFacadeServiceV2.java.ftl");
           }
           consumer.customFile(customFile);
         }).strategyConfig(builder -> {
@@ -149,18 +149,14 @@ public class ElegooCodeGeneratorV2 {
           customMap.put("voApiPackage", basePackage + ".api.vo");
           customMap.put("queryPackage", basePackage + ".query");
           customMap.put("module", moduleFacadeName);
-          customMap.put("facadePackage", basePackage);
           customMap.put("ServiceNameConstants", serviceNameConstants);
           customMap.put("errorCode", errorCode);
           customMap.put("mapperAnnotation", true);
-          customMap.put("apiConstants", basePackage + ".constants");
           consumer.customMap(customMap);
 
           // 自定义模板
           Map<String, String> customFile = new HashMap<>();
-          customFile.put("DTO.java", "/elegootemplates/entityDTO.java.ftl");
-          customFile.put("Facade.java", "/elegootemplates/entityFacadeV2.java.ftl");
-          customFile.put("ApiConstants.java", "/elegootemplates/apiConstantsV2.java.ftl");
+          customFile.put("DTO.java", "/satellite/entityDTO.java.ftl");
           consumer.customFile(customFile);
         }).strategyConfig(builder -> {
           builder.addInclude(tableName) // 设置需要生成的表名
