@@ -13,16 +13,14 @@ import java.util.Map;
 public class ElegooCodeGeneratorV2 {
 
   //表名称
-  private static String[] tableNames = new String[]{"tp_operation_record","tp_operation_record_count"};
+//  private static String[] tableNames = new String[]{"tp_operation_record","tp_operation_record_count"};
+  private static String[] tableNames = new String[]{"tp_operation_record"};
   //路由名称
   private String controllerPathName = "event-data-info";
   //数据库名称
   private String databaseName = "elegoo";
   //模块名称
   private String moduleName = "device";
-  //是否生成facade接口
-  private Boolean isFacade = false;
-  private Boolean isCache = false;//是否生成缓存
   //数据库url
   private String url = "jdbc:postgresql://192.168.3.25:15432/test1018?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true";
   private String userName = "user_mmijbx";
@@ -65,48 +63,43 @@ public class ElegooCodeGeneratorV2 {
         }).templateConfig(builder -> {
           builder.controller("").disable();
           builder.mapper("");
-          builder.xml("/satellite/mapperV2.xml");
+          builder.xml("/satellite/mapperV2.xml.ftl");
           builder.entity("").disable();
         }).injectionConfig(consumer -> {
           //自定义参数
           Map<String, Object> customMap = new HashMap<>();
           String basePackage = rootPackage + "." + moduleName;
-          String basePackageFacade = rootPackage + "." + moduleFacadeName;
           customMap.put("dtoPackage", basePackage + ".dto");
           customMap.put("dtoApiPackage", basePackage + ".api.dto");
           customMap.put("voApiPackage", basePackage + ".api.vo");
           customMap.put("pathName", controllerPathName);
           customMap.put("voPackage", basePackage + ".vo");
-          customMap.put("queryPackage", basePackage + ".query");
+          customMap.put("queryPackage", basePackage + ".bo");
           customMap.put("module", moduleName);
-          customMap.put("facadeServicePackage", basePackage + ".feign");
-          customMap.put("dtoPackageFacade", basePackageFacade + ".dto");
-          customMap.put("voPackageFacade", basePackageFacade + ".vo");
           customMap.put("convertPackage", basePackage + ".convert");
-          customMap.put("queryPackageFacade", basePackageFacade + ".query");
           customMap.put("mapperPackage", basePackage + ".dao");
+          customMap.put("boPackage", basePackage + ".bo");
+          customMap.put("ormPackage", basePackage + ".orm");
+          customMap.put("entityPackage", basePackage + ".domain.po");
           customMap.put("mapperAnnotation", true);
-          customMap.put("facadePackage", basePackageFacade);
           consumer.customMap(customMap);
 
           // 自定义模板
           Map<String, String> customFile = new HashMap<>();
           customFile.put("Mapper.java", "/satellite/mapperV2.java.ftl");
+          customFile.put("Mapper.xml", "/satellite/mapperV2.xml.ftl");
           customFile.put("Convert.java", "/satellite/convertV2.java.ftl");
           customFile.put("ReqVO.java", "/satellite/entityReqVO.java.ftl");
           customFile.put("RespVO.java", "/satellite/entityRespVO.java.ftl");
           customFile.put("QueryBO.java", "/satellite/entityBO.java.ftl");
-          customFile.put("Service.java", "/satellite/serviceV2.java.ftl");
-          customFile.put("ServiceImpl.java", "/satellite/serviceImplV2.java.ftl");
+          customFile.put("DataService.java", "/satellite/dataserviceV2.java.ftl");
+          customFile.put("DataServiceImpl.java", "/satellite/dataserviceImplV2.java.ftl");
           customFile.put("Entity.java", "/satellite/entityV2.java.ftl");
           customFile.put("Controller.java", "/satellite/controllerV2.java.ftl");
-          if (isFacade) {
-            customFile.put("FacadeService.java", "/satellite/entityFacadeServiceV2.java.ftl");
-          }
           consumer.customFile(customFile);
         }).strategyConfig(builder -> {
           builder.addInclude(tableName) // 设置需要生成的表名
-              .addTablePrefix("prodigytec_") // 设置过滤表前缀
+              .addTablePrefix("tp_") // 设置过滤表前缀
               .entityBuilder()
               .fileOverride()
               .disableSerialVersionUID()
@@ -160,7 +153,7 @@ public class ElegooCodeGeneratorV2 {
           consumer.customFile(customFile);
         }).strategyConfig(builder -> {
           builder.addInclude(tableName) // 设置需要生成的表名
-              .addTablePrefix("prodigytec_") // 设置过滤表前缀
+              .addTablePrefix("tp_") // 设置过滤表前缀
               .entityBuilder()
               .disableSerialVersionUID()
               .enableLombok()

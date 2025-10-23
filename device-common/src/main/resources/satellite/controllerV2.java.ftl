@@ -1,13 +1,13 @@
 package ${package.Controller};
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.elegoo.framework.common.pojo.CommonResult;
+import com.voxel.dance.api.result.AjaxResult;
 import ${package.Service}.${entity}Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.elegoo.framework.common.pojo.PageResult;
+import com.voxel.dance.common.pojo.PageResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 <#if restControllerStyle>
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import ${superControllerClassPackage};
 </#if>
 
-import ${voPackageFacade}.${entity}VO;
 
 
 <#list table.fields as field>
@@ -59,42 +58,42 @@ public class ${table.controllerName} {
      * 查询分页数据
      */
     @PostMapping(value = "/queryPage")
-    public CommonResult<PageResult<${entity}VO>> queryPage(@RequestBody ${entity}Query pageDTO) {
+    public AjaxResult<PageResult<${entity}VO>> queryPage(@RequestBody ${entity}Query pageDTO) {
         PageResult<${entity}VO> page = ${entity?uncap_first}Service.queryPage(pageDTO);
-        return CommonResult.success(page);
+        return AjaxResult.success(page);
     }
 
     /**
      * 根据${entity?uncap_first}Id查询
      */
     @PostMapping(value = "/getBy${keyPropertyName?cap_first}")
-    public CommonResult<${entity}VO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
+    public AjaxResult<${entity}VO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
         ${entity}VO result = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
-        return CommonResult.success(result);
+        return AjaxResult.success(result);
     }
 
     /**
      * 新增
      */
     @PostMapping(value = "/add")
-    public CommonResult<Boolean> add(@RequestBody ${entity}DTO dto) {
-        return CommonResult.success(${entity?uncap_first}Service.add(dto));
+    public AjaxResult<Boolean> add(@RequestBody ${entity}DTO dto) {
+        return AjaxResult.success(${entity?uncap_first}Service.add(dto));
     }
 
     /**
      * 修改
      */
     @PostMapping(value = "/updateBy${keyPropertyName?cap_first}")
-    public CommonResult<Boolean> updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}DTO dto) {
-        return CommonResult.success(${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(dto));
+    public AjaxResult<Boolean> updateBy${keyPropertyName?cap_first}(@RequestBody ${entity}DTO dto) {
+        return AjaxResult.success(${entity?uncap_first}Service.updateBy${keyPropertyName?cap_first}(dto));
     }
 
     /**
      * 删除
      */
     @DeleteMapping(value = "/removeBy${keyPropertyName?cap_first}")
-    public CommonResult<Boolean> removeBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
-        return CommonResult.success(${entity?uncap_first}Service.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first}));
+    public AjaxResult<Boolean> removeBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
+        return AjaxResult.success(${entity?uncap_first}Service.removeBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first}));
     }
 
 

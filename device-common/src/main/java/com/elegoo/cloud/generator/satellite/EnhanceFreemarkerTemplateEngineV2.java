@@ -21,19 +21,23 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
             if (key.equals("DTO.java")) {
                 otherPath = otherPath + "dto";
             } else if (key.equals("RespVO.java") || key.equals("ReqVO.java")) {
-                otherPath = otherPath + "controller\\vo";
+                otherPath = otherPath + "api\\vo";
             } else if (key.equals("QueryBO.java")) {
-                otherPath = otherPath + "controller\\bo";
+                otherPath = otherPath + "domain\\bo";
             } else if(key.equals("FacadeService.java")){
                 otherPath = otherPath + "feign";
             } else if (key.equals("Mapper.java")) {
-                otherPath = otherPath + "dao";
+                otherPath = otherPath + "orm\\dao";
             } else if(key.equals("Convert.java")){
                 otherPath = otherPath + "convert";
-            } else if(key.equals("Service.java") ||  key.equals("ServiceImpl.java")){
-                otherPath = otherPath + "dataservice";
+            } else if(key.equals("DataService.java") ||  key.equals("DataServiceImpl.java")){
+                if(key.equals("DataService.java")){
+                    otherPath = otherPath + "orm\\iService";
+                }else{
+                    otherPath = otherPath + "orm\\iService\\impl";
+                }
             } else if(key.equals("Entity.java")){
-                otherPath = otherPath + "dal.pgsql";
+                otherPath = otherPath + "domain\\po";
             } else if(key.equals("Controller.java")){
                 otherPath = otherPath + "controller";
             }
@@ -43,8 +47,12 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
             }else if(key.equals("Entity.java")){
                 fileName = String.format(otherPath + File.separator + entityName + ".java");
             }
-            else if(key.equals("Service.java")) {
-                fileName = String.format(otherPath + File.separator + "I" + entityName + "%s", key);
+            else if(key.equals("DataService.java") || key.equals("DataServiceImpl.java")) {
+                if(key.equals("DataService.java")){
+                    fileName = String.format(otherPath + File.separator + "I" + entityName + "%s", key);
+                }else{
+                    fileName = String.format(otherPath + File.separator + entityName + "%s", key);
+                }
             } else {
                 fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             }

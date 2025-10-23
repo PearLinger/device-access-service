@@ -1,6 +1,6 @@
 package ${mapperPackage};
 
-import ${package.Entity}.${entity};
+import ${entityPackage}.${entity};
 import ${superMapperClassPackage};
 <#if mapperAnnotation>
 import org.apache.ibatis.annotations.Mapper;

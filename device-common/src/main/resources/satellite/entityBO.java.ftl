@@ -1,4 +1,4 @@
-package ${package.Controller}.bo;
+package ${boPackage};
 
 <#if swagger>
 import io.swagger.annotations.ApiModel;
@@ -11,7 +11,8 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 import java.util.Date;
-import com.elegoo.framework.common.pojo.SortablePageParam;
+import java.math.*;
+import com.voxel.dance.common.pojo.SortablePageParam;
 /**
 * <p>
 * ${table.comment!}

@@ -7,7 +7,7 @@ import ${package.Entity}.${entity};
 import ${dtoApiPackage}.${entity}DTO;
 import ${voApiPackage}.${entity}VO;
 import java.util.List;
-import com.elegoo.framework.common.pojo.PageResult;
+import com.voxel.dance.common.pojo.PageResult;
 
 /**
 * <p>
