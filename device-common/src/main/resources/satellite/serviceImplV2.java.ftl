@@ -4,7 +4,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${entityPackage}.${entity};
-import ${mapperPackage}.${table.mapperName};
 import ${boPackage}.${entity}BO;
 import ${ormPackage}.iService.I${table.entityName}DataService;
 import ${package.Service}.I${table.serviceName};

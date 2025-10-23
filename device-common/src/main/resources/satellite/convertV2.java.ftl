@@ -8,7 +8,7 @@ import ${package.Controller}.vo.*;
 import java.util.List;
 import com.voxel.dance.common.pojo.PageResult;
 import ${boPackage}.${entity}BO;
-
+import org.mapstruct.factory.Mappers;
 /**
 * <p>
   * ${table.comment!} 服务实现类

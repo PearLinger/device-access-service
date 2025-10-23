@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 import java.util.Date;
-
+import java.math.*;
 /**
 * <p>
 * ${table.comment!}
