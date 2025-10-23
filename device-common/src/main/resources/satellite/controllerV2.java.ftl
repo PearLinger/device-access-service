@@ -68,7 +68,7 @@ public class ${table.controllerName} {
      */
     @PostMapping(value = "/getBy${keyPropertyName?cap_first}")
     public AjaxResult<${entity}RespVO> getBy${keyPropertyName?cap_first}(@RequestParam Long ${keyPropertyName?uncap_first}) {
-        ${entity}RespVO = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
+        ${entity}RespVO result = ${entity?uncap_first}Service.getBy${keyPropertyName?cap_first}(${keyPropertyName?uncap_first});
         return AjaxResult.success(result);
     }
 

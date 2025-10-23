@@ -1,4 +1,4 @@
-package ${mapperPackage};
+package ${ormPackage}.dao;
 
 import ${entityPackage}.${entity};
 import ${superMapperClassPackage};

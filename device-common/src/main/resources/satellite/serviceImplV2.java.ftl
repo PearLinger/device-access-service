@@ -39,8 +39,7 @@ import com.voxel.dance.tango.enums.HttpStatusCodeEnum;
 @Service
 @RequiredArgsConstructor
 public class ${table.serviceImplName} implements I${table.serviceName} {
-@Resource
-private ${entity}Convert convert;
+private static ${entity}Convert convert = ${entity}Convert.INSTANCE;
 @Resource
 private I${table.entityName}DataService ${entity?uncap_first}DataService;
     @Override

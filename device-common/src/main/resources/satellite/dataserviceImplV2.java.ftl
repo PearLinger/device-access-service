@@ -5,17 +5,21 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${entityPackage}.${entity};
 import ${boPackage}.${entity}BO;
-import ${mapperPackage}.${table.mapperName};
+import ${ormPackage}.dao.${table.mapperName};
 import  ${ormPackage}.iService.I${table.entityName}DataService;
 import ${superServiceImplClassPackage};
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import cn.hutool.core.util.StrUtil;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.elegoo.framework.common.exception.ServiceException;
 import com.elegoo.framework.common.exception.enums.GlobalErrorCodeConstants;
+import com.voxel.dance.common.pojo.*;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.util.*;
+import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 <#list table.fields as field>
 <#if field.keyFlag>
     <#assign keyPropertyName="${field.propertyName}"/>
@@ -38,13 +42,12 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 
 }
 <#else>
-public class ${table.entityName}DataService extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements I${table.entityName}DataService {
+public class ${table.entityName}DataServiceImpl extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements I${table.entityName}DataService {
 
 	  @Override
     public Page<${entity}> queryPage(${entity}BO bo) {
-        Page<${entity}> page = new Page<${entity}>(bo.getPageNo(),bo.getPageSize());
         LambdaQueryWrapper<${entity}> lqw = getWrapper(bo);
-        page = this.page(page,lqw);
+        Page<${entity}> page = this.selectPage(bo,lqw);
         return page;
     }
 
@@ -97,5 +100,27 @@ public class ${table.entityName}DataService extends ${superServiceImplClass}<${t
         lqw.orderByDesc(${entity}::get${keyPropertyName?cap_first});
         return lqw;
     }
+
+    private Page<${entity}> selectPage(PageParam pageParam, Collection<SortingField> sortingFields,
+        @Param("ew") Wrapper<${entity}> queryWrapper) {
+         if (PageParam.PAGE_SIZE_NONE.equals(pageParam.getPageSize())) {
+        List<${entity}> list = this.getBaseMapper().selectList(queryWrapper);
+        Page<${entity}> page = new Page<>();
+        page.setRecords(list);
+        page.setTotal(list.size());
+        return page;
+          } else {
+        Page<${entity}> page = MyBatisUtils.buildPage(pageParam, sortingFields);
+         return this.page( page, queryWrapper);
+        }
+    }
+
+    private Page<${entity}> selectPage(SortablePageParam pageParam, @Param("ew") Wrapper<${entity}> queryWrapper) {
+      return this.selectPage(pageParam, PageUtils.of(pageParam.getSort()), queryWrapper);
+    }
+
+    private Page<${entity}> selectPage(PageParam pageParam, @Param("ew") Wrapper<${entity}> queryWrapper) {
+            return this.selectPage(pageParam, (Collection) null, queryWrapper);
+            }
 }
 </#if>

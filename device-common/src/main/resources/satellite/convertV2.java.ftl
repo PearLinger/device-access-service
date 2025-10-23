@@ -18,8 +18,10 @@ import ${boPackage}.${entity}BO;
 * @since ${date}
 */
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface ${entity}Convert {
+     ${entity}Convert INSTANCE = Mappers.getMapper(${entity}Convert.class);
+
       @Mapping(source = "records", target = "list")
       PageResult<${entity}RespVO> pageEntityConvertToVO(Page<${entity}> pageInfo);
 

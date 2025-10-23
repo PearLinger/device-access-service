@@ -40,6 +40,12 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
                 otherPath = otherPath + "domain\\po";
             } else if(key.equals("Controller.java")){
                 otherPath = otherPath + "controller";
+            }else if(key.equals("Service.java") ||  key.equals("ServiceImpl.java")){
+                if(key.equals("Service.java")){
+                    otherPath = otherPath + "service";
+                }else{
+                    otherPath = otherPath + "service\\impl";
+                }
             }
             String fileName = "";
             if (key.equals("QueryBO.java")) {
@@ -53,7 +59,15 @@ public class EnhanceFreemarkerTemplateEngineV2 extends FreemarkerTemplateEngine 
                 }else{
                     fileName = String.format(otherPath + File.separator + entityName + "%s", key);
                 }
-            } else {
+            } else if(key.equals("Service.java") ||  key.equals("ServiceImpl.java")){
+                if(key.equals("Service.java")){
+                    fileName = String.format(otherPath + File.separator + "I" + entityName + "%s", key);
+                }else{
+                    fileName = String.format(otherPath + File.separator + entityName + "%s", key);
+                }
+            }else if(key.equals("Mapper.xml")) {
+                fileName = String.format(this.getPathInfo(OutputFile.xml) + File.separator + entityName + "%s", key);
+            }else{
                 fileName = String.format(otherPath + File.separator + entityName + "%s", key);
             }
             this.outputFile(new File(fileName), objectMap, value,true);

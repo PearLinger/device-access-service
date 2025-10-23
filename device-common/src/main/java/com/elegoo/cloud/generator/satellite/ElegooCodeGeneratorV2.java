@@ -78,7 +78,7 @@ public class ElegooCodeGeneratorV2 {
           customMap.put("module", moduleName);
           customMap.put("convertPackage", basePackage + ".convert");
           customMap.put("mapperPackage", basePackage + ".dao");
-          customMap.put("boPackage", basePackage + ".bo");
+          customMap.put("boPackage", basePackage + ".domain.bo");
           customMap.put("ormPackage", basePackage + ".orm");
           customMap.put("entityPackage", basePackage + ".domain.po");
           customMap.put("basePackage", basePackage);
